@@ -1,0 +1,26 @@
+#userdiv{
+    float: right;
+
+}
+#logoutButton{
+    float: right;
+}
+
+#userDesc{
+    float: left;
+}
+
+.right{
+
+
+    margin-right: 20px;
+}
+
+.nav{
+    max-width: 80%;
+    background-color: #0078e7;
+    display: block;
+}
+.test{
+
+}
