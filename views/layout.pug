@@ -4,35 +4,42 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/pure-min.css')
     link(rel='stylesheet', href='/stylesheets/menu.css')
+
   body
     block header
-      .asdasd
-        .pure-menu-horizontal.pure-menu
-          ul.pure-menu-list.asdasd
-            li.pure-menu-item.pure-menu-selected
-              a.pure-menu-link.pure-menu-heading(href='#home') Home
-            li.pure-menu-item.pure-menu-selected
-              a.pure-menu-link.pure-menu-heading(href='#news') News
-            li.pure-menu-item.pure-menu-selected
-              a.pure-menu-link.pure-menu-heading(href='#contact') Contact
-            li.pure-menu-item.pure-menu-selected
-              a.pure-menu-link.pure-menu-heading(href='#about') About
 
-            li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover.pure-menu-selected
-              a.pure-menu-link(href='#') Mitarbeiterverwaltung
-              ul.pure-menu-children
-                li.pure-menu-item
-                  a.pure-menu-link(href='#') link1
-                li.pure-menu-item
-                  a.pure-menu-link(href='#') link1
-                li.pure-menu-item
-                  a.pure-menu-link(href='#') link1
-          .right
-            p
-              | Horscht Mayer
-              br
-              |  Hinter der Eiche links 23
-            p
+      .header
+        .home-menu.pure-menu.pure-menu-horizontal.pure-menu-fixed
+          a.pure-menu-heading(href='') Your Site
+          a.pure-menu-heading(href='') zweiter link
+          li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover
+            a.pure-menu-heading.pure-menu-link(href='#') Mitarbeiterverwaltung
+            ul.pure-menu-children
+              li.pure-menu-item
+                a.pure-menu-link(href='#') Mitarbeiter
+              li.pure-menu-item
+                a.pure-menu-link(href='#') Fehlzeiten
+              li.pure-menu-item
+                a.pure-menu-link(href='#') Kernzeiten
+
+
+
+
+
+
+
+          ul.pure-menu-list
+            li.pure-menu-item.pure-menu-selected
+              a.pure-menu-link(href='#') Home
+            li.pure-menu-item.nomargin
+              p.nomargin
+                | Horscht Mayer
+                br
+                |  Hinter der Eiche links 23
+              p
+            li.pure-menu-item
+              a.pure-menu-link(href='#') Sign Up
+
 
 
     block content
