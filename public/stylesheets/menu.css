@@ -109,7 +109,7 @@ a.pure-button-primary {
 .home-menu .pure-menu-heading {
     color: white;
     font-weight: 400;
-    font-size: 120%;
+    font-size: 90%;
 }
 
 .home-menu .pure-menu-selected a {
@@ -286,9 +286,24 @@ a.pure-button-primary {
     }
 }
 
+#logoutButton{
+    margin-left: 10px;
+}
+
+
 .nomargin{
+
     margin-top: 0px;
     margin-bottom: 0px;
     padding-bottom: 0px;
     padding-top: 0px;
 }
+
+
+p{
+    line-height: 1.2em;
+    color: #b8bdbd;
+    font-size: 90%;
+}
+
+
