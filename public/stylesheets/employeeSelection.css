@@ -4,3 +4,9 @@
 .inputField{
     margin-right: 20px;
 }
+
+.pure-table{
+    margin-top: 40px;
+
+}
+tr:hover { background-color : #89ae37; }

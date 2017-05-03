@@ -6,6 +6,8 @@
 
 block employeeSelection
     .selectionDiv
+        -var ma = {id:1, vorname: "alfons", nachname: "nachname"}
+
         form.pure-form(action="/", method="POST")
             fieldset
                 label(for="manr") MitarbeiterNr:
@@ -17,5 +19,29 @@ block employeeSelection
                 label(for="surname") Nachname:
                 input(name="surname" value="")
 
-                if test
-                    label(for="surname") Nachname:
+
+                table.pure-table.pure-table-horizontal
+                  thead
+                    tr
+
+                      th.test MA-Nr
+                      th Vorname
+                      th Nachname
+                      th mehr
+                      th mehr
+                      th mehr
+                      th mehr
+                  tbody
+
+                    tr(onclick="test('#{ma.id}')")
+                      td #{ma.id}
+                      td vorname1
+                      td nachname1
+                      td mehr content
+                      td mehr content
+                      td mehr content
+                      td mehr content
+
+
+
+
