@@ -1,5 +1,9 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .content
+    include employeeSelection
+    h1 Letzter Zeitstempel:
+    h2= lastaction
+    lastaction
+

@@ -1,0 +1,21 @@
+//
+   Created by blackgear on 03.05.17.
+// div to select employee, include if needed.
+
+- var test = null
+
+block employeeSelection
+    .selectionDiv
+        form.pure-form(action="/", method="POST")
+            fieldset
+                label(for="manr") MitarbeiterNr:
+                input.inputField(name="manr" value="")
+
+                label(for="forname") Vorname:
+                input.inputField(name="forname" value="")
+
+                label(for="surname") Nachname:
+                input(name="surname" value="")
+
+                if test
+                    label(for="surname") Nachname:
