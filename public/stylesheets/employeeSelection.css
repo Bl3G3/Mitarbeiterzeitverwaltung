@@ -6,7 +6,12 @@
 }
 
 .pure-table{
-    margin-top: 40px;
-
+    margin-top: 20px;
+    display: table;
 }
 tr:hover { background-color : #89ae37; }
+
+
+.fixed-table{
+    position: absolute;
+}
