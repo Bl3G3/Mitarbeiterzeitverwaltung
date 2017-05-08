@@ -1,4 +1,5 @@
 var express = require('express');
+var mongoose = require('mongoose');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -9,6 +10,8 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+mongoose.connect('mongodb://localhost:27017/swpdb');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,6 +34,7 @@ app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
+  mongoose.mode
 });
 
 // error handler

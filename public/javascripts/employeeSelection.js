@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/swp-db');
 
 
+
 function selectEmployee(id, forname, surname){
     //alert("test")
     document.getElementById("manrfield").value = id;
@@ -13,46 +14,54 @@ function selectEmployee(id, forname, surname){
 
 }
 
-function search() {
 
-    var result = new Array();
 
-    if(document.getElementById("manrfield").value){
-        var id = document.getElementById("manrfield").value;
-        Mitarbeiter.find({id: id},
-            function(err, response){
-                console.log(response);
-                result = JSON.stringify(response);
-            });
-    } else
-    if(document.getElementById("fornamefield").value && document.getElementById("surnamefield").value){
-        var vorname = document.getElementById("fornamefield").value;
-        var nachname = document.getElementById("surnamefield").value;
-        Mitarbeiter.find({vorname: vorname, nachname: nachname},
-            function(err, response){
-                console.log(response);
-                result = JSON.stringify(response);
-            });
-    } else
-    if(document.getElementById("fornamefield").value){
-        var vorname = document.getElementById("fornamefield").value;
-        Mitarbeiter.find({vorname: vorname},
-            function(err, response){
-                console.log(response);
-                result = JSON.stringify(response);
-            });
-    } else
-    if(document.getElementById("surnamefield").value){
-        var nachname = document.getElementById("surnamefield").value;
-        Mitarbeiter.find({nachname: nachname},
-            function(err, response){
-                console.log(response);
-                result = JSON.stringify(response);
-            });
-    }
 
-    var tableContent = new Array(mitarbeiter);
 
+
+
+
+//
+// function search() {
+//
+//     var result = new Array();
+//
+//     if(document.getElementById("manrfield").value){
+//         var id = document.getElementById("manrfield").value;
+//         Mitarbeiter.find({id: id},
+//             function(err, response){
+//                 console.log(response);
+//                 result = JSON.stringify(response);
+//             });
+//     } else
+//     if(document.getElementById("fornamefield").value && document.getElementById("surnamefield").value){
+//         var vorname = document.getElementById("fornamefield").value;
+//         var nachname = document.getElementById("surnamefield").value;
+//         Mitarbeiter.find({vorname: vorname, nachname: nachname},
+//             function(err, response){
+//                 console.log(response);
+//                 result = JSON.stringify(response);
+//             });
+//     } else
+//     if(document.getElementById("fornamefield").value){
+//         var vorname = document.getElementById("fornamefield").value;
+//         Mitarbeiter.find({vorname: vorname},
+//             function(err, response){
+//                 console.log(response);
+//                 result = JSON.stringify(response);
+//             });
+//     } else
+//     if(document.getElementById("surnamefield").value){
+//         var nachname = document.getElementById("surnamefield").value;
+//         Mitarbeiter.find({nachname: nachname},
+//             function(err, response){
+//                 console.log(response);
+//                 result = JSON.stringify(response);
+//             });
+//     }
+//
+//     var tableContent = new Array(mitarbeiter);
+//
 
     // for (var i = 0; i< result.length; i++){
     //
@@ -78,7 +87,7 @@ function search() {
         //      td #{mitarbeiter.abteilung}
     // }
 
-}
+// }
 
 //
 // function toggleTable() {

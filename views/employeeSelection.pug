@@ -11,16 +11,16 @@ block employeeSelection
         form.pure-form(action="/", method="POST")
             fieldset
                 label(for="manr") MitarbeiterNr:
-                input#manrfield.inputField(name="manr" value="")
+                input#manrfield.inputField(name="manr" value=(mitarbeiter ? mitarbeiter.mitarbeiternummer : ""))
 
                 label(for="forname") Vorname:
-                input#fornamefield.inputField(name="forname" value="")
+                input#fornamefield.inputField(name="forname" value=(mitarbeiter ? mitarbeiter.vorname : ""))
 
                 label(for="surname") Nachname:
-                input(name="surname" id="surnamefield" value="")
+                input(name="surname" id="surnamefield" value=(mitarbeiter ? mitarbeiter.name : ""))
 
-                a.pure-button(onclick="search()") Search
-                a.pure-button(onclick="$('#slider').slideToggle(200);return false;") Take
+                button(type='submit').pure-button.search-button Suchen
+                //a.pure-button(onclick="$('#slider').slideToggle(200);return false;") Take
 
             .colorblack
                 a.pure-button(onclick="$('#slider').slideToggle(200);return false;") Collapse/Expand
@@ -36,17 +36,34 @@ block employeeSelection
                       th Telefon
                       th Mail
                       th Abteilung
+                      th Auswählen
 
                   tbody#slider
 
-                    //each mitarbeiter in maArray
-                    //    tr(onclick="selectEmployee('" + mitarbeiter.id + "', '" + mitarbeiter.vorname + "', '" + mitarbeiter.nachname + "')")
-                    //      td #{mitarbeiter.id}
-                    //      td #{mitarbeiter.vorname}
-                    //      td #{mitarbeiter.nachname}
-                    //      td #{mitarbeiter.telefon}
-                    //      td #{mitarbeiter.email}
-                    //      td #{mitarbeiter.abteilung}
+                    if (malist)
+
+
+                        each mitarbeiter in malist
+                            tr
+                              td #{mitarbeiter.mitarbeiternummer}
+                              td #{mitarbeiter.vorname}
+                              td #{mitarbeiter.name}
+                              td #{mitarbeiter.telefon}
+                              td #{mitarbeiter.email}
+                              td #{mitarbeiter.abteilung}
+                              td.hidden #{mitarbeiter.rechte}
+                              td
+                                a.pure-button(onclick="selectEmployee('" + mitarbeiter.mitarbeiternummer + "', " +
+                                                                    "'" + mitarbeiter.vorname + "', " +
+                                                                    "'" + mitarbeiter.name + "'," +
+                                                                    "'" + mitarbeiter.telefon + "'," +
+                                                                    "'" + mitarbeiter.email + "'," +
+                                                                    "'" + mitarbeiter.abteilung + "'," +
+                                                                    "'" + mitarbeiter.rechte + "'," +
+
+                              ")")
+
+//(onclick="selectEmployee('" + mitarbeiter.id + "', '" + mitarbeiter.vorname + "', '" + mitarbeiter.nachname + "')")
 
                     //tr(onclick="selectEmployee('" + ma.id + "', '" + ma.vorname + "', '" + ma.nachname + "')")
                     //    td 2

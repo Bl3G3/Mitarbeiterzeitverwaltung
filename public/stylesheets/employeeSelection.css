@@ -11,6 +11,9 @@
 }
 tr:hover { background-color : #89ae37; }
 
+.search-button{
+    margin-left: 30px;
+}
 
 .fixed-table{
     position: absolute;

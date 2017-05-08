@@ -1,6 +1,7 @@
 
+var mongoose = require('mongoose');
 
-var mitarbeiter = mongoose.Schema({
+var Mitarbeiterschema = mongoose.Schema({
     mitarbeiternummer: Number,
     name: String,
     vorname: String,
@@ -15,3 +16,5 @@ var mitarbeiter = mongoose.Schema({
     passwort: String
 });
 
+
+module.exports = mongoose.model('Mitarbeiter', Mitarbeiterschema, 'Mitarbeiter');
