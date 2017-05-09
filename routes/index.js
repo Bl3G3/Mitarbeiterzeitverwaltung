@@ -3,10 +3,17 @@ var express = require('express');
 var router = express.Router();
 var Mitarbeiter = require('../models/mitarbeiter');
 
+
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express', lastaction: 'Eingestempelt'});
+    var userData = require('../public/tools/dataHandler')
+
+    res.render('index', { title: 'Express', lastaction: 'Eingestempelt', user:userData.getUserData()});
 });
+
+
 
 
 router.post('/example', function(req, res){

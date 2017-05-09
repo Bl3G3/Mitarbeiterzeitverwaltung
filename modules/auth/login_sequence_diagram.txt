@@ -1,0 +1,17 @@
+https://bramp.github.io/js-sequence-diagrams/
+
+note left of Node Server: Request vom Browser
+Node Server->expresssession: (HttpPostRequest)
+
+expresssession->passport: (Session)
+note left of strategy_mongoose~LocalStrategy: Anonyme Callback Funktion
+passport->strategy_mongoose~LocalStrategy: (Session, username, password)
+strategy_mongoose~LocalStrategy->strategy_mongoose: authenticateUser(username, password)
+
+note right of strategy_mongoose: Läd User Objekt aus der\n Datenbank, prüft das Passwort \n und den "active" Status
+
+strategy_mongoose->strategy_mongoose~LocalStrategy: callback(err, user)
+strategy_mongoose~LocalStrategy->passport: done(err, user, messages)
+
+passport->expresssession: set_session_cookie
+expresssession->Node Server: (Success)

@@ -9,7 +9,7 @@ html
     link(rel='stylesheet', href='/stylesheets/employeeSelection.css')
     link(rel='stylesheet', href='/stylesheets/pure-min.css')
     script(src='https://code.jquery.com/jquery-3.2.1.min.js')
-    script(src='/javascripts/employeeSelection.js')
+    script(src='../public/javascripts/employeeSelection.js')
     script(src='/models/mitarbeiter.js')
 
   body
@@ -41,9 +41,9 @@ html
             li.pure-menu-item.pure-menu-selected
             li.pure-menu-item.nomargin
               p.nomargin
-                | Horscht Mayer
+                | #{user.vorname + " " + user.nachname}
                 br
-                |  Hinter der Eiche links 23
+                | #{"MaNr: " +user.mitarbeiternummer}
             li.pure-menu-item
               a#logoutButton.pure-menu-link.nomargin(href='#') Logout
 

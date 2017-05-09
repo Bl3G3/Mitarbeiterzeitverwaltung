@@ -15,7 +15,7 @@ function selectEmployee(id, forname, surname){
 }
 
 
-
+module.exports.getUserData = getUserData;
 
 
 
