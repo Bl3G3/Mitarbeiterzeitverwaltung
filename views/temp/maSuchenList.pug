@@ -1,7 +1,5 @@
-doctype html
-html
-  head
-  body
+extends ../layout
+block content
     h1 Mitarbeiter suchen #{test}
     form(action='http://127.0.0.1:3000/ap2/maSuchen', method='get')
       label(for='vname')
