@@ -25,15 +25,15 @@
     "i18next-express-middleware": "^1.0.5",
     "i18next-node-fs-backend": "^1.0.0",
     "js-sequence-diagrams": "^1000000.0.6",
-    "mongodb": "^2.2.25",
+    "mongodb": "^2.2.26",
     "mongoose": "*",
     "morgan": "*",
+    "mpromise": "^0.5.5",
     "passport": "*",
     "passport-local": "*",
     "pug": "^2.0.0-beta11",
     "purecss": "*",
-    "serve-favicon": "*",
-    "mpromise": "^0.5.5"
+    "serve-favicon": "*"
   },
   "devDependencies": {
     "chai": "^3.5.0",

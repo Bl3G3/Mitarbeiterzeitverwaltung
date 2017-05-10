@@ -6,10 +6,10 @@ html
     form(action='http://127.0.0.1:3000/fe', method='get')
        label(for='vdate')
         |Von:
-        input#vname(type='text', name='vdate')
+        input#vname(type='date', name='vdate')
        label(for='bdate')
         |Bis:
-        input#zname(type='text', name='bdate')
+        input#zname(type='date', name='bdate')
         button suchen
     table#dateergebnis
       tr

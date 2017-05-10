@@ -14,27 +14,27 @@ router.use(function timeLog (req, res, next) {
 
 // define the home page route
 router.get('/', function (req, res) {
-  res.render('main')
+  res.render('absences/main')
 });
 // define the about route
 router.get('/maSuchen', function (req, res) {
   if(req.param('name')===undefined || req.param('vorname')===undefined)
-  {res.render('maSuchen');
+  {res.render('temp/maSuchen');
   return;}
   Mitarbeiter.find(function(err, maList){
   if(err) res.send(err);
   //TODO ma nach vor und nachname durchsuchen
-  res.render('maSuchenList', {'maList' : maList});
+  res.render('temp/maSuchenList', {'maList' : maList});
   })
  
 });
 router.get('/fe',function(req,res){
-  res.render('fe');
+  res.render('absences/fe');
 });
 
 router.get('/feHinzufuegen',function(req,res){
   if(req.param('vondate')===undefined)//Muss noch abfragen
-  {res.render('feHinzufuegen')}
+  {res.render('absences/feHinzufuegen')}
   //Fehlzeit erstellen.
       		var fe_von = req.param('vondate');
 		var fe_bis = req.param('bisdate');
@@ -44,7 +44,7 @@ router.get('/feHinzufuegen',function(req,res){
  //Prüfung auf korrektheit
 		//ist von vor bis?
 		if(fe_von >= fe_bis){
-			res.render('feHinzufuegen',{Meldung:"Der Start muss vor dem Ende sein"});
+			res.render('absences/feHinzufuegen',{Meldung:"Der Start muss vor dem Ende sein"});
 			return;
 		}
 
@@ -53,7 +53,7 @@ router.get('/feHinzufuegen',function(req,res){
 ,function(err, fehlzeitfind){
 			if (err){
 			var meldung = "Es existiert schon eine Fehlzeit im Zeitraum: "+fe_von +"-"+fe_bis;
-			res.render('feHinzufuegen',{Meldung:meldung});
+			res.render('absences/feHinzufuegen',{Meldung:meldung});
 			}
 		});
 
@@ -69,10 +69,10 @@ router.get('/feHinzufuegen',function(req,res){
 			var antwort;
 			if(err){
 				antwort = "Die Speicherung der Fehlzeit vom" +req.param('vondate') +"-" + req.param('bisdate') +"wurde nicht erfolgreich gespeichert";
-				res.render('feHinzugfuegenA',{Meldung : antwort});
+				res.render('absences/feHinzugfuegenA',{Meldung : antwort});
 			}else{
 				antwort = "Die Speicherung der Fehlzeit vom"+req.param('vondate') +"-" + req.param('bisdate') +"wurde erfolgreich gespeichert";
-				res.render('feHinzugfuegenA',{Meldung : antwort});
+				res.render('absences/feHinzugfuegenA',{Meldung : antwort});
 		}
 		})	
 });

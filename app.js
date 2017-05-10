@@ -59,7 +59,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+app.use(flash());http://stackoverflow.com/questions/8623205/node-js-error-error-cannot-find-module-mongoose
 
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -94,8 +94,8 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
-// app.listen(3000, function () {
-//     console.log('Example app listening on port 3000!')
-// });
+ //app.listen(3000, function () {
+ //    console.log('Example app listening on port 3000!')
+ //});
 
 module.exports = app;
