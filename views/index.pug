@@ -4,6 +4,17 @@ block content
   .content
     //include employeeSelection
     h1 Letzter Zeitstempel:
-    h2= lastaction
-    lastaction
+    if (last_stamp)
+      if (last_stamp.stamp_type == 1)
+        h2 Eingestempelt
+      else
+        h2 Ausgestempelt
+      h2=last_stamp.timestamp.getUTCDay() + "." + last_stamp.timestamp.getUTCMonth() + "." + last_stamp.timestamp.getUTCFullYear()
+      h2=last_stamp.timestamp.getHours() + ":"+last_stamp.timestamp.getMinutes()
+
+
+
+    a.pure-button(href='/home/newStamp', title='stempeln') Stempeln
+
+
 

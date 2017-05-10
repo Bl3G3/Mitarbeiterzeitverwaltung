@@ -1,6 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt-nodejs');
-var employees = require('../../models/mongoose/employees');
+var employees = require('../../models/employees');
 
 exports.strategy =  new LocalStrategy({
         passReqToCallback : true
@@ -23,6 +23,7 @@ exports.strategy =  new LocalStrategy({
 );
 
 exports.authenticateUser = function(employee_id, password, done) {
+
     // search user in mongo db
     employees.read(employee_id, function (err, user) {
         // error, return it
@@ -37,6 +38,15 @@ exports.authenticateUser = function(employee_id, password, done) {
         if(!user.active){
             return done(new Error("Der eingegebene Benutzer ist deaktiviert"), false);
         }
+        //dummy
+        if (!user.password){
+            employees.set_password(employee_id, password, function (err, res) {
+                if (err) console.log("shit");
+                else
+                    console.log("password set.");
+            });
+        }
+
 
         // User exists - check password
         isValidPassword(user, password, function (err, res) {
@@ -57,7 +67,12 @@ exports.authenticateUser = function(employee_id, password, done) {
 };
 
 var isValidPassword = function(user, password, callback){
-    bcrypt.compare(password, user.password, function(err, res) {
-        return callback(err, res);
-    });
+    // dummy - delete, after encrypted password set works
+    if (user.password == password){
+        return callback(null, 1)
+    } else return callback(null, null);
+
+    // bcrypt.compare(password, user.password, function(err, res) {
+    //     return callback(err, res);
+    // });
 };

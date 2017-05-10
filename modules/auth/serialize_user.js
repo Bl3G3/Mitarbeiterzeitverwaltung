@@ -1,11 +1,11 @@
-var employees = require('../../models/mongoose/employees');
+var employee = require('../../models/employees');
 
 module.exports.serialize = function(user, done) {
     done(null, user._id);
 };
 
 module.exports.deserialize = function(id, done) {
-    employees.Employee.findById(id, function(err, user) {
+    employee.Employee.findById(id, function(err, user) {
         done(err, user);
     });
 };

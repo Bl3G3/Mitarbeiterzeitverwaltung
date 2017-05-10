@@ -3,17 +3,44 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "npm run test-unit",
+    "test-unit": "NODE_ENV=test mocha --require co-mocha './**/*.spec.js'",
+    "test-unit-debug": "NODE_ENV=test mocha debug --require co-mocha './**/*.spec.js'",
+    "test-unit-auth": "NODE_ENV=test mocha './modules/auth/*.spec.js'",
+    "coverage": "istanbul cover _mocha $(find ./modules -name \"*.js\" -not -path \"./node_modules/*\")",
+    "user": "node ./snipets/insert_user.js"
   },
   "dependencies": {
-    "body-parser": "~1.17.1",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.3",
-    "express": "~4.15.2",
-    "mongoose": "^4.9.7",
-    "morgan": "~1.8.1",
-    "pug": "~2.0.0-beta11",
-    "purecss": "^0.6.2",
-    "serve-favicon": "~2.4.2"
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "*",
+    "connect-flash": "*",
+    "connect-mongo": "^1.3.2",
+    "cookie-parser": "*",
+    "date-and-time": "*",
+    "debug": "*",
+    "express": "*",
+    "express-session": "*",
+    "i18next": "^8.1.0",
+    "i18next-express-middleware": "^1.0.5",
+    "i18next-node-fs-backend": "^1.0.0",
+    "js-sequence-diagrams": "^1000000.0.6",
+    "mongodb": "^2.2.25",
+    "mongoose": "*",
+    "morgan": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "pug": "^2.0.0-beta11",
+    "purecss": "*",
+    "serve-favicon": "*",
+    "mpromise": "^0.5.5"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "co-mocha": "^1.2.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.3.0",
+    "sinon": "^2.1.0",
+    "sinon-chai": "^2.9.0"
   }
 }

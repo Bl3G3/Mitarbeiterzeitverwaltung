@@ -9,11 +9,9 @@ var session = require('express-session');
 var flash = require('connect-flash');
 var passport = require('passport');
 
-
-var db_config = require('./db_config');
-var db = require('./models/mongoose/db');
+var db_config = require('./dbconfig');
+var db = require('./models/db');
 db.connect(db_config.url);
-
 
 const MongoStore = require('connect-mongo')(session);
 
@@ -30,17 +28,12 @@ var auth_middleware = require('./modules/auth/middleware');
 
 // module routers
 var auth_router = require('./modules/auth/router');
-var example_router = require('./modules/examples/router');
-var home_router = require('./modules/home/router');
-
-
-
-
+var stamps_router = require('./modules/stamp/router');
 var index = require('./routes/index');
-var users = require('./routes/users');
+var ap2 = require('./routes/ap2');
+
 
 var app = express();
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -50,14 +43,14 @@ app.set('view engine', 'pug');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 var session_ttl = 30; // 30 min
 app.use(session({
     secret: 'o8u98zqoijfd8254afasdfas98377749lsnczuk934',
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: session_ttl*60*1000, secure: false },
+    cookie: {maxAge: session_ttl * 60 * 1000, secure: false},
     store: new MongoStore({
         mongooseConnection: db.getMongoose().connection,
         ttl: session_ttl * 60 // = min
@@ -68,8 +61,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-
-
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -78,31 +69,33 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function (req, res) {
     res.redirect('/home');
 });
-
-
 //module router
 app.use('/auth', auth_router);
-app.use('/examples', example_router);
-app.use('/home', auth_middleware.onlyEmployees, home_router);
+app.use('/home', auth_middleware.onlyEmployees, index);
+app.use('/stamps', stamps_router);
+app.use('/ap2', ap2);
 // insert new module routers here!
 
+
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-  mongoose.mode
+app.use(function (req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+    mongoose.mode
 });
-
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
+// app.listen(3000, function () {
+//     console.log('Example app listening on port 3000!')
+// });
 
 module.exports = app;
