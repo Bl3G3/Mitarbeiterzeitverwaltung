@@ -2,7 +2,7 @@ extends ../layout
 block content
     h1
       | Fehlzeiten verwalten
-    form(action='http://127.0.0.1:3000/fe', method='get')
+    form.pure-form(action='http://127.0.0.1:3000/fe', method='get')
        label(for='vdate')
         |Von:
         input#vname(type='date', name='vdate')
@@ -10,7 +10,7 @@ block content
         |Bis:
         input#zname(type='date', name='bdate')
         button suchen
-    table#dateergebnis
+    table.pure-table.pure-table-horizontal#dateergebnis
       tr
         th Von
         th Bis

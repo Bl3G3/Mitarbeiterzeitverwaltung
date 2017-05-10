@@ -2,7 +2,7 @@ extends ../layout
 block content
     h1 Fehlzeit hinzufuegen
     a #{Meldung}
-    form(action='http://127.0.0.1:3000/ap2/feHinzufuegen', method='get')
+    form.pure-form(action='http://127.0.0.1:3000/ap2/feHinzufuegen', method='get')
       | Von:
       br
       input(type='date', name='vondate')

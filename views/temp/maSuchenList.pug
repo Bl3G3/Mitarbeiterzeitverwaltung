@@ -1,7 +1,7 @@
 extends ../layout
 block content
     h1 Mitarbeiter suchen #{test}
-    form(action='http://127.0.0.1:3000/ap2/maSuchen', method='get')
+    form.pure-form(action='http://127.0.0.1:3000/ap2/maSuchen', method='get')
       label(for='vname')
         | Vorname: 
         input#vname(type='text', name='vname')
@@ -11,7 +11,7 @@ block content
         button suchen
     form(action='http://127.0.0.1:3000/ap2/fe')
         button Fehlzeiten
-    table.fixed_headers
+    table.fixed_headers.pure-table.pure-table-horizontal
       thead
         tr
           th MitarbeiterNr
