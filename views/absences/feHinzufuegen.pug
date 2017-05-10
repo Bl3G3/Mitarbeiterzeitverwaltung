@@ -1,0 +1,29 @@
+html
+  head
+  body
+    h1 Fehlzeit hinzufuegen
+    a #{Meldung}
+    form(action='http://127.0.0.1:3000/ap2/feHinzufuegen', method='get')
+      | Von:
+      br
+      input(type='date', name='vondate')
+      br
+      | 			Bis:
+      br
+      input(type='date', name='bisdate')
+      br
+      input(type='hidden', name='maNr', value='012345')
+      br
+      input(type='radio', name='kat', value='krank')
+      |  Krank
+      br
+      input(type='radio', name='kat', value='urlaub')
+      |  Urlaub
+      br
+      input(type='radio', name='kat', value='homeOffice')
+      |  Home Office
+      br
+      input(type='radio', name='kat', value='abwesend')
+      |  Abwesend
+      br
+      input(type='submit', value='speichern')

@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+  body
+    h1 Mitarbeiter suchen #{test}
+    form(action='http://127.0.0.1:3000/ap2/maSuchen', method='get')
+      label(for='vname')
+        | Vorname: 
+        input#vname(type='text', name='vname')
+      label(for='zname')
+        | Zuname: 
+        input#zname(type='text', name='zname')
+        button suchen
+    form(action='http://127.0.0.1:3000/ap2/fe')
+        button Fehlzeiten
+    table.fixed_headers
+      thead
+        tr
+          th MitarbeiterNr
+          th Vorname
+          th Nachname
+          th Abteilung
+      tbody
+        for mitarbeiter in maList
+          tr
+            td= mitarbeiter.mitarbeiternummer
+            td= mitarbeiter.vorname
+            td= mitarbeiter.N_name
+            td= mitarbeiter.abteilung

@@ -1,0 +1,20 @@
+extends ../home/master
+block css
+
+block body
+    .body
+        .login
+            form(method='POST', action='').pure-form.pure-form-aligned
+                .pure-control-group
+                    label(for='username')='Employee No'
+                    input#username(type='number', placeholder='Employee No', name='username')
+                .pure-control-group
+                    label(for='password') Password
+                    input#password(type='password', placeholder='Password', name='password')
+                .pure-controls
+                    button(type='submit', value='Login').pure-button.pure-button-primary='Login'
+
+            if message
+                p= message
+
+block script

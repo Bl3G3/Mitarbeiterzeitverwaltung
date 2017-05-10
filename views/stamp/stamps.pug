@@ -1,0 +1,43 @@
+extends ../layout
+
+block content
+    .content
+        h1 test
+
+        form.pure-form(action="/stamps", method="POST")
+            fieldset
+                label(for="fromdate") Von:
+                input#fromdate.inputField(name="fromdate" value=(fromdate ? fromdate : ""))
+
+                label(for="tilldate") Bis:
+                input#tilldate.inputField(name="tilldate" value=(tilldate ? tilldate : ""))
+
+                button(type='submit').pure-button.search-button Suchen
+
+
+        table.pure-table.pure-table-horizontal
+            thead
+                tr
+
+                    th Datum
+                    th Eingestempelt
+                    th Ausgestempelt
+
+            tbody
+
+                if (stamplist)
+
+                    -var n = 0;
+
+                    while n < stamplist.length
+                        tr
+                            if (stamplist[n])
+                                td #{stamplist[n].timestamp.getDay() + "." + stamplist[n].timestamp.getMonth() + "." + stamplist[n].timestamp.getFullYear()}
+                                td #{stamplist[n].timestamp.getHours() + ":" + stamplist[n].timestamp.getMinutes()}
+                                    a.pure-button
+                                td.hidden=n++
+                            if (stamplist[n])
+                                td #{stamplist[n].timestamp.getHours() + ":" + stamplist[n].timestamp.getMinutes()}
+                                    a.pure-button
+                                td.hidden=n++
+

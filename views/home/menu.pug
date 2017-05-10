@@ -1,0 +1,49 @@
+extends master
+block css
+    // link(rel='stylesheet', href='/vendor/pure-menu/css/layouts/side-menu.css')
+
+block body
+    #layout
+        // Menu toggle
+        a#menuLink.menu-link(href='#menu')
+            // Hamburger icon
+            span
+        #menu
+            .pure-menu
+                //a.pure-menu-heading(href='#') MZE
+                ul.pure-menu-list
+                    // Home
+                    li.pure-menu-item
+                        a.pure-menu-link(href='/home') Home
+
+                    //table
+                    li.pure-menu-item
+                        //-
+                            .pure-menu-selected
+                        a.pure-menu-link(href='/examples', title='Table') Table
+                    //article
+                    li.pure-menu-item
+                        //-
+                            .pure-menu-selected
+                        a.pure-menu-link(href='/examples/article', title='Article') Article
+
+                    // Logout
+                    li.pure-menu-item
+                        a.pure-menu-link(href='/auth/logout', title='Logout') Logout
+
+        #main
+            .header
+                block header
+            .content
+                //-.mze-client
+                    p
+                        | Mandant:
+                        strong
+                            a(href='#', title='Mandant wechseln') Max Mustermann
+
+                block content
+
+    block script
+        script(src='/vendor/pure-menu/js/ui.js')
+
+

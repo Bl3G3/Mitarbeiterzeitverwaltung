@@ -1,0 +1,24 @@
+html
+  head
+  body
+    h1
+      | Fehlzeiten verwalten
+    form(action='http://127.0.0.1:3000/ap2/fe', method='get')
+       label(for='date')
+        |Am:
+        input#vname(type='text', name='date')
+        button suchen
+    table#dateergebnis
+      tr
+        th Von
+        th Bis
+        th Kategorie
+      tr
+        td #{von}
+        td #{bis}
+        td #{kat}
+    form(method='get', action='http://127.0.0.1:3000/ap2/feAendern')
+      button(type='submit') edit
+    form(method='get', action='http://127.0.0.1:3000/ap2/feHinzufuegen')
+      button(type='submit') add
+
