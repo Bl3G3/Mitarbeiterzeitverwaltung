@@ -2,12 +2,12 @@ extends ../layout
 block content
     h1 Mitarbeiter suchen #{test}
     form.pure-form(action='http://127.0.0.1:3000/ap2/maSuchen', method='get')
-      label(for='vname')
-        | Vorname: 
-        input#vname(type='text', name='vorname')
-      label(for='zname')
-        | Nachname:
-        input#zname(type='text', name='nachname')
-        button suchen
+        label(for='vname')
+            | Vorname:
+            input#vname(type='text', name='vorname')
+        label(for='zname')
+            | Nachname:
+            input#zname(type='text', name='nachname')
+            button suchen
     //form(action='http://127.0.0.1:3000/ap2/fe')
         button Fehlzeiten

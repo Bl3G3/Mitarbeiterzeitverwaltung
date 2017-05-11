@@ -1,28 +1,39 @@
-//extends ../layout
-//block content
-html
-    head
-        body
+extends ../layout
+block content
 
-        h1 Fehlzeit ändern
-    form.pure-form(action='http://127.0.0.1:3000/ap2/feAendern', method='get')
+    h1 Fehlzeit ändern
+    h2 #{Meldung}
+    form.pure-form(action='http://127.0.0.1:3000/ap2/feAendernA', method='get')
         h2 Alte Fehlzeit
-        label(for='old_vondate') Von:
-        input(type='date', name='old_vondate', readonly='readonly', value='#{old_vondate}')
-        label(for='old_bisdate') Bis:
-        input(type='date', name='old_bisdate', readonly='readonly', value='#{old_bisdate}')
-        label(for='old_maNr') Mitrarbeiternummer:
-        input(type='hidden', name='old_maNr', readonly='readonly', value='#{old_maNr}')
-        label(for='old_kat') Kategorie:
-        input(type='text', name='old_kat', readonly='readonly', value='#[old_kat}')
+        label(for='old_vondate')
+            | Von:
+        input(type='text', name='old_vondate', readonly='readonly', value=old_vondate)
+        label(for='old_bisdate')
+            | Bis:
+        input(type='text', name='old_bisdate', readonly='readonly', value=old_bisdate)
+        label(for='old_kat')
+            | Kategorie:
+        input(type='text', name='old_kat', readonly='readonly', value=old_kat)
         h2 Neue Fehlzeit
-        label(for='new_vondate') Von:
-        input(type='date', name='new_vondate', value='#{old_vondate}')
-        label(for='new_bisdate') Bis:
-        input(type='date', name='new_bisdate', value='#{old_bisdate}')
-        label(for='new_maNr') Mitrarbeiternummer:
-        input(type='hidden', name='new_maNr', value='#{old_maNr}')
-        label(for='new_kat') Kategorie:
-        input(type='radio', name='kat', value='krank')
-        input(type='text', name='new_kat', value='#[old_kat}')
-        input(type='submit', value='speichern')
+        label(for='new_vondate')
+            | Von:
+        input(type='date', name='new_vondate', value=old_vondate)
+        label(for='new_bisdate')
+            | Bis:
+        input(type='date', name='new_bisdate', value=old_bisdate)
+        br
+        input(type='radio', name='new_kat', value='krank')
+        | Krank
+        br
+        input(type='radio', name='new_kat', value='urlaub')
+        | Urlaub
+        br
+        input(type='radio', name='new_kat', value='homeOffice')
+        | Home Office
+        br
+        input(type='radio', name='new_kat', value='abwesend')
+        | Abwesend
+        br
+        input(type='hidden', name='maNr' value=old_maNr)
+        input(type='hidden', name='feId' value=old_feId)
+        input(type='submit', value='aendern')

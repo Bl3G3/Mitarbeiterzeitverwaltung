@@ -17,24 +17,60 @@ router.use(function timeLog(req, res, next) {
 //    res.render('absences/main')
 //});
 
-//Fehlzeiten ändern
+//Fehlzeiten ändern anzeigen
 router.get('/feAendern', function (req, res) {
-    res.render('absences/feAendern');
-    if (!(req.param('new_vondate') === undefined || req.param('new_bisdate') === undefined || req.param('new_kat') === undefined || req.param('new_maNr') === undefined)) {
-        //Es wurde noch keine Änderungen eingetragen --> seite normal rendern
-        if (!(req.param('vondate') === undefined || req.param('bisdate') === undefined || req.param('kat') === undefined || req.param('maNr') === undefined)) {
-            //Parameter vorhanden zum rendern der Seite
-            res.render('absences/feAendern', {
-                old_vondate: req.param('vondate'),
-                old_bisdate: req.param('bisdate'),
-                old_kat: req.param('kat'),
-                old_maNr: req.param('maNr')
-            });
-        } else {
-            res.render('error');
+    if (req.param('feId') === undefined || req.param('maNr') === undefined) {
+        if (req.param('maNr') === undefined) {
+            res.render('temp/maSuche');
+        } else if (req.param('feId') === undefined) {
+            res.render('absences/fePlain', {maNr: req.param('maNr')});
         }
     } else {
-        res.render('error');
+        var id = require('mongodb').ObjectID(req.param('feId'));
+        Fehlzeit.findOne({_id: id}, function (error, fe) {
+            if (error) {
+                res.render('error');
+            }
+            var von = new Date(fe.von);
+            von = von.toISOString().slice(0, 10);
+            var bis = new Date(fe.bis);
+            bis = bis.toISOString().slice(0, 10);
+            res.render('absences/feAendern', {
+                old_vondate: von,
+                old_bisdate: bis,
+                old_kat: fe.kategorie,
+                old_maNr: fe.maNr,
+                old_feId: fe._id
+            });
+        });
+    }
+});
+router.get('/feAendernA', function (req, res) {
+    if (req.param('maNr') === undefined) {
+        res.render('temp/maSuchen');
+    } else if (req.param('feId') === undefined) {
+        res.render('absences/fePlain', {maNr: req.param('maNr')});
+    } else if (req.param('new_vondate') === undefined || req.param('new_bisdate') === undefined || req.param('new_kat') === undefined) {
+        res.render('absences/fePlain', {
+            maNr: req.param('maNr'),
+            Meldung: "Es haben eingaben gefehlt bitte versuchen sie es erneut"
+        });
+    } else {//Alles sollte passen
+        var id = require('mongodb').ObjectID(req.param('feId'));
+        Fehlzeit.findOne({_id: id}, function (error, fe) {
+            if (error) {
+                res.render('error');
+            }
+            fe.von = req.param('new_vondate');
+            fe.bis = req.param('new_bisdate');
+            fe.kategorie = req.param('new_kat');
+            fe.save(function (err) {
+                if (err) {
+                    res.render('absences/feAendernA', {Meldung: "Die Aenderung war nicht", maNr: req.param('maNr')});
+                }
+                res.render('absences/feAendernA', {Meldung: "Die Aenderung war erfolgreich", maNr: req.param('maNr')});
+            })
+        });
     }
 });
 
@@ -70,16 +106,13 @@ router.get('/fe', function (req, res) {
         } else {//Fehlzeit suchen!
             Fehlzeit.find(
                 {
-                    mitarbeiternummer: req.param('maNr'),
-                    //  vondate: {$lte: req.param('such_date')},
-                    //  bisdate: {$gte: req.param('such_date')}
+                    maNr: req.param('maNr'),
+                    von: {$lte: req.param('such_date')},
+                    bis: {$gte: req.param('such_date')}
                 }).exec(function (err, feList) {
                 if (err) {
                     res.render('error');
-                    console.log("error beim suchen der Fehlzeiten");
                 }
-                console.log("Habe Fehlzeiten bekommen");
-                console.log(feList);
                 res.render('absences/fe', {
                     'feList': feList, maNr: req.param('maNr'), gesuchtDate: req.param('such_date')
                 })
@@ -127,7 +160,7 @@ router.get('/feHinzufuegen', function (req, res) {
     fehlzeit.bis = fe_bis;
     fehlzeit.kategorie = fe_kat;
     fehlzeit.maNr = fe_ma;
-    console.log("Speichere Fehlzeit:" + fe_von + fe_bis + fe_kat + fe_ma);
+
     fehlzeit.save(function (err) {
         var antwort;
         if (err) {
