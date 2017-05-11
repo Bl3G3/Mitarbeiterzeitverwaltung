@@ -47,7 +47,7 @@ router.get('/maSuchen', function (req, res) {
         return;
     }
     Mitarbeiter.find({
-        name: req.param('nachname'),
+        nachname: req.param('nachname'),
         vorname: req.param('vorname')
     }).exec(function (err, maList) {
         res.render('temp/maSuchenList', {'maList': maList});
