@@ -18,7 +18,7 @@ exports.Stamp = Stamp;
 exports.create = function (employee_no, callback) {
     exports.readLast(employee_no, function (err, doc) {
         var newStamp = new Stamp();
-        if(err){
+        if(err || !doc){
             //first entry
             newStamp.stamp_no = 1 ;
             newStamp.employee_no = employee_no;

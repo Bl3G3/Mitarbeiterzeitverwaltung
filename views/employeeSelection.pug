@@ -9,7 +9,7 @@ block employeeSelection
 
         form.pure-form(action="/", method="POST")
             fieldset
-                label(for="manr") MitarbeiterNr:
+                label(for="manr") #{theurl}
                 input#manrfield.inputField(name="manr" value=(mitarbeiter ? mitarbeiter.mitarbeiternummer : ""))
 
                 label(for="forname") Vorname:

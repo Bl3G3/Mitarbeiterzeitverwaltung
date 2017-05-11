@@ -4,6 +4,9 @@ block content
     .content
         h1 test
 
+        if (selected_user >= 0)
+            include ../headings/employeeSelection
+
         form.pure-form(action="/stamps", method="POST")
             fieldset
                 label(for="fromdate") Von:
@@ -34,7 +37,8 @@ block content
                             if (stamplist[n])
                                 td #{stamplist[n].timestamp.getDay() + "." + stamplist[n].timestamp.getMonth() + "." + stamplist[n].timestamp.getFullYear()}
                                 td #{stamplist[n].timestamp.getHours() + ":" + stamplist[n].timestamp.getMinutes()}
-                                    a.pure-button
+                                    if (user.right)
+                                        a.pure-button
                                 td.hidden=n++
                             if (stamplist[n])
                                 td #{stamplist[n].timestamp.getHours() + ":" + stamplist[n].timestamp.getMinutes()}
