@@ -17,6 +17,28 @@ router.use(function timeLog(req, res, next) {
 //    res.render('absences/main')
 //});
 
+//Fehlzeiten ändern
+router.get('/feAendern', function (req, res) {
+    res.render('absences/feAendern');
+    if (!(req.param('new_vondate') === undefined || req.param('new_bisdate') === undefined || req.param('new_kat') === undefined || req.param('new_maNr') === undefined)) {
+        //Es wurde noch keine Änderungen eingetragen --> seite normal rendern
+        if (!(req.param('vondate') === undefined || req.param('bisdate') === undefined || req.param('kat') === undefined || req.param('maNr') === undefined))
+        {
+            //Parameter vorhanden zum rendern der Seite
+            res.render('absences/feAendern', {
+                old_vondate: req.param('vondate'),
+                old_bisdate: req.param('bisdate'),
+                old_kat: req.param('kat'),
+                old_maNr: req.param('maNr')
+            });
+        } else {
+            res.render('error');
+        }
+    }else{
+        res.render('error');
+    }
+});
+
 // Ma Search for Fehlzeiten
 router.get('/maSuchen', function (req, res) {
 
