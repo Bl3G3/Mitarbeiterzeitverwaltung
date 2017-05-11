@@ -91,8 +91,12 @@ exports.set_password = function(id, password, callback) {
         }
         else {
             doc.password = password;
+            console.log("read success");
             doc.save(function(err) {
-                if (err) callback(err);
+                if (err) {
+                    console.log(err)
+                    callback(err);
+                }
                 else
                     callback();
             });
