@@ -2,26 +2,30 @@ extends ../layout
 block content
     h1 Mitarbeiter suchen #{test}
     form.pure-form(action='http://127.0.0.1:3000/ap2/maSuchen', method='get')
-      label(for='vname')
-        | Vorname: 
-        input#vname(type='text', name='vname')
-      label(for='zname')
-        | Zuname: 
-        input#zname(type='text', name='zname')
-        button suchen
+        label(for='vname')
+            | Vorname:
+            input#vname(type='text', name='vorname')
+        label(for='zname')
+            | Zuname:
+            input#zname(type='text', name='nachname')
+            button suchen
     form(action='http://127.0.0.1:3000/ap2/fe')
         button Fehlzeiten
     table.fixed_headers.pure-table.pure-table-horizontal
-      thead
-        tr
-          th MitarbeiterNr
-          th Vorname
-          th Nachname
-          th Abteilung
-      tbody
-        for mitarbeiter in maList
-          tr
-            td= mitarbeiter.mitarbeiternummer
-            td= mitarbeiter.vorname
-            td= mitarbeiter.N_name
-            td= mitarbeiter.abteilung
+        thead
+            tr
+                th MitarbeiterNr
+                th Vorname
+                th Nachname
+                th Abteilung
+                th FAlink
+        tbody
+            for mitarbeiter in maList
+                tr
+                    td= mitarbeiter.mitarbeiternummer
+                    td= mitarbeiter.vorname
+                    td= mitarbeiter.nachname
+                    td= mitarbeiter.abteilung
+                    td
+                        a(href='/ap2/fe?maNr='+mitarbeiter.mitarbeiternummer)
+                          | hello world

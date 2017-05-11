@@ -4,10 +4,10 @@ block content
     form.pure-form(action='http://127.0.0.1:3000/ap2/maSuchen', method='get')
       label(for='vname')
         | Vorname: 
-        input#vname(type='text', name='vname')
+        input#vname(type='text', name='vorname')
       label(for='zname')
-        | Zuname: 
-        input#zname(type='text', name='zname')
+        | Nachname:
+        input#zname(type='text', name='nachname')
         button suchen
     form(action='http://127.0.0.1:3000/ap2/fe')
         button Fehlzeiten
@@ -18,4 +18,4 @@ block content
           th Vorname
           th Nachname
           th Abteilung
-      
+          th FAlink
