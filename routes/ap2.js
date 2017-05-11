@@ -22,8 +22,7 @@ router.get('/feAendern', function (req, res) {
     res.render('absences/feAendern');
     if (!(req.param('new_vondate') === undefined || req.param('new_bisdate') === undefined || req.param('new_kat') === undefined || req.param('new_maNr') === undefined)) {
         //Es wurde noch keine Änderungen eingetragen --> seite normal rendern
-        if (!(req.param('vondate') === undefined || req.param('bisdate') === undefined || req.param('kat') === undefined || req.param('maNr') === undefined))
-        {
+        if (!(req.param('vondate') === undefined || req.param('bisdate') === undefined || req.param('kat') === undefined || req.param('maNr') === undefined)) {
             //Parameter vorhanden zum rendern der Seite
             res.render('absences/feAendern', {
                 old_vondate: req.param('vondate'),
@@ -34,7 +33,7 @@ router.get('/feAendern', function (req, res) {
         } else {
             res.render('error');
         }
-    }else{
+    } else {
         res.render('error');
     }
 });
@@ -50,13 +49,39 @@ router.get('/maSuchen', function (req, res) {
         nachname: req.param('nachname'),
         vorname: req.param('vorname')
     }).exec(function (err, maList) {
-        res.render('temp/maSuchenList', {'maList': maList});
+        res.render('temp/maSuchenList', {
+            'maList': maList,
+            'suche_vorname': req.param('vorname'),
+            'suche_nachname': req.param('nachname')
+        });
     });
 });
 
 //Fehlzeitenseite in der man eine Fehlzeit selektieren kann und diese ändern kann.
 router.get('/fe', function (req, res) {
-    res.render('absences/fe');
+    if (req.param('maNr') === undefined) {
+        res.render('absences/fePlain', {
+            Meldung: "Bitte wählen sie vorher einen Mitarbeiter aus",
+            maNr: req.param('maNr')
+        });
+    } else {
+        if (req.param('such_date') === undefined) {
+            res.render('absences/fePlain', {maNr: req.param('maNr')});
+        } else {//Fehlzeit suchen!
+            Fehlzeit.find(
+                {
+                    vondate: {$lte: req.param('such_date')},
+                    bisdate: {$gte: req.param('such_date')}
+                }).exec(function (err, feList) {
+                if (err) res.render('error');
+                res.render('absences/fe', {
+                    'feList': feList, maNr: req.param('maNr')
+                })
+                ;
+            });
+        }
+
+    }
 });
 
 //Fehlzeit hinzufügen
