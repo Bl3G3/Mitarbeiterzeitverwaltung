@@ -70,12 +70,18 @@ router.get('/fe', function (req, res) {
         } else {//Fehlzeit suchen!
             Fehlzeit.find(
                 {
-                    vondate: {$lte: req.param('such_date')},
-                    bisdate: {$gte: req.param('such_date')}
+                    mitarbeiternummer: req.param('maNr'),
+                    //  vondate: {$lte: req.param('such_date')},
+                    //  bisdate: {$gte: req.param('such_date')}
                 }).exec(function (err, feList) {
-                if (err) res.render('error');
+                if (err) {
+                    res.render('error');
+                    console.log("error beim suchen der Fehlzeiten");
+                }
+                console.log("Habe Fehlzeiten bekommen");
+                console.log(feList);
                 res.render('absences/fe', {
-                    'feList': feList, maNr: req.param('maNr')
+                    'feList': feList, maNr: req.param('maNr'), gesuchtDate: req.param('such_date')
                 })
                 ;
             });
@@ -121,15 +127,15 @@ router.get('/feHinzufuegen', function (req, res) {
     fehlzeit.bis = fe_bis;
     fehlzeit.kategorie = fe_kat;
     fehlzeit.maNr = fe_ma;
-    console.log(fe_von + fe_bis + fe_kat + fe_ma);
+    console.log("Speichere Fehlzeit:" + fe_von + fe_bis + fe_kat + fe_ma);
     fehlzeit.save(function (err) {
         var antwort;
         if (err) {
             antwort = "Die Speicherung der Fehlzeit vom" + req.param('vondate') + "-" + req.param('bisdate') + "wurde nicht erfolgreich gespeichert";
-            res.render('absences/feHinzugfuegenA', {Meldung: antwort});
+            res.render('absences/feHinzugfuegenA', {Meldung: antwort, maNr: req.param('maNr')});
         } else {
             antwort = "Die Speicherung der Fehlzeit vom" + req.param('vondate') + "-" + req.param('bisdate') + "wurde erfolgreich gespeichert";
-            res.render('absences/feHinzugfuegenA', {Meldung: antwort});
+            res.render('absences/feHinzugfuegenA', {Meldung: antwort, maNr: req.param('maNr')});
         }
     })
 });

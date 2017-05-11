@@ -7,24 +7,26 @@ block content
     form.pure-form(action='http://127.0.0.1:3000/ap2/fe', method='get')
         label(for='date')
             | Am:
-            input#vname(type='date', name='such_date')
+            input#vname(type='date', name='such_date' value=gesuchtDate)
+            input(type='hidden', name='maNr', value=maNr)
             button suchen
     table.pure-table.pure-table-horizontal#dateergebnis
         tr
             th Von
             th Bis
             th Kategorie
+            th MaNr
+            th edit
                 for fehlzeiten in feList
                     tr
-                        td= fehlzeiten.vonDate
-                        td= mitarbeiter.vorname
-                        td= mitarbeiter.nachname
-                        td= mitarbeiter.abteilung
-                        td
-                            a(href='/ap2/fe?maNr=' + mitarbeiter.mitarbeiternummer)
-                                | FE
+                        td= fehlzeiten.von
+                        td= fehlzeiten.bis
+                        td= fehlzeiten.kategorie
+                        td= fehlzeiten.mitarbeiternummer
     form(method='get', action='http://127.0.0.1:3000/ap2/feAendern')
+        input(type='hidden', name='maNr', value=maNr)
         button(type='submit') edit
     form(method='get', action='http://127.0.0.1:3000/ap2/feHinzufuegen')
+        input(type='hidden', name='maNr', value=maNr)
         button(type='submit') add
 
