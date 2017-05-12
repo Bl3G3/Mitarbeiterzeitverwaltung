@@ -1,23 +1,32 @@
 extends ../layout
-block content
+block  content
     h1
-      | Fehlzeiten verwalten
+        | Fehlzeiten verwalten
+    h2
+        | #{Meldung}
     form.pure-form(action='http://127.0.0.1:3000/ap2/fe', method='get')
-       label(for='date')
-        |Am:
-        input#vname(type='date', name='date')
-        button suchen
+        label(for='date')
+            | Am:
+            input#vname(type='date', name='such_date' value=gesuchtDate)
+            input(type='hidden', name='maNr', value=maNr)
+            button suchen
     table.pure-table.pure-table-horizontal#dateergebnis
-      tr
-        th Von
-        th Bis
-        th Kategorie
-      tr
-        td #{von}
-        td #{bis}
-        td #{kat}
-    form(method='get', action='http://127.0.0.1:3000/ap2/feAendern')
-      button(type='submit') edit
+        tr
+            th Von
+            th Bis
+            th Kategorie
+            th MaNr
+            th edit
+                for fehlzeiten in feList
+                    tr
+                        td= fehlzeiten.von
+                        td= fehlzeiten.bis
+                        td= fehlzeiten.kategorie
+                        td= fehlzeiten.maNr
+                        td
+                            a(href='/ap2/feAendern?maNr=' + fehlzeiten.maNr + '&feId=' + fehlzeiten._id)
+                                | edit
     form(method='get', action='http://127.0.0.1:3000/ap2/feHinzufuegen')
-      button(type='submit') add
+        input(type='hidden', name='maNr', value=maNr)
+        button(type='submit') add
 

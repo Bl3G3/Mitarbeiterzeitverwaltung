@@ -1,26 +1,39 @@
 extends ../layout
 block content
-    h1
-      | Fehlzeiten verwalten
-    form.pure-form(action='http://127.0.0.1:3000/fe', method='get')
-       label(for='vdate')
-        |Von:
-        input#vname(type='date', name='vdate')
-       label(for='bdate')
-        |Bis:
-        input#zname(type='date', name='bdate')
-        button suchen
-    table.pure-table.pure-table-horizontal#dateergebnis
-      tr
-        th Von
-        th Bis
-        th Kategorie
-      tr
-        td #{von}
-        td #{bis}
-        td #{kat}
-    form(method='get', action='http://127.0.0.1:3000/feAendern')
-      button(type='submit') edit
-    form(method='get', action='http://127.0.0.1:3000/feHinzufuegen')
-      button(type='submit') add
 
+    h1 Fehlzeit ändern
+    h2 #{Meldung}
+    form.pure-form(action='http://127.0.0.1:3000/ap2/feAendernA', method='get')
+        h2 Alte Fehlzeit
+        label(for='old_vondate')
+            | Von:
+        input(type='date', name='old_vondate', readonly='readonly', value=old_vondate)
+        label(for='old_bisdate')
+            | Bis:
+        input(type='date', name='old_bisdate', readonly='readonly', value=old_bisdate)
+        label(for='old_kat')
+            | Kategorie:
+        input(type='text', name='old_kat', readonly='readonly', value=old_kat)
+        h2 Neue Fehlzeit
+        label(for='new_vondate')
+            | Von:
+        input(type='date', name='new_vondate', value=old_vondate)
+        label(for='new_bisdate')
+            | Bis:
+        input(type='date', name='new_bisdate', value=old_bisdate)
+        br
+        input(type='radio', name='new_kat', value='krank')
+        | Krank
+        br
+        input(type='radio', name='new_kat', value='urlaub')
+        | Urlaub
+        br
+        input(type='radio', name='new_kat', value='homeOffice')
+        | Home Office
+        br
+        input(type='radio', name='new_kat', value='abwesend')
+        | Abwesend
+        br
+        input(type='hidden', name='maNr' value=old_maNr)
+        input(type='hidden', name='feId' value=old_feId)
+        input(type='submit', value='aendern')

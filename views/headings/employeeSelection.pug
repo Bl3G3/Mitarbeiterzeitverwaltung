@@ -7,7 +7,7 @@ block employeeSelection
     .selectionDiv
 
 
-        form.pure-form(action='/stamps/admin', method="POST")
+        form.pure-form(action=#{theurl}, method="GET")
             fieldset
                 label(for="manr") #{theurl}
                 input#manrfield.inputField(name="manr")
@@ -26,31 +26,57 @@ block employeeSelection
 
                 br
                 table.pure-table.pure-table-horizontal
-                    thead
-                        tr
+                  thead
+                    tr
 
-                            th.test MA-Nr
-                            th Vorname
-                            th Nachname
-                            th Telefon
-                            th Mail
-                            th Abteilung
-                            th Auswählen
+                      th.test MA-Nr
+                      th Vorname
+                      th Nachname
+                      th Telefon
+                      th Mail
+                      th Abteilung
+                      th Auswählen
 
-                    tbody#slider
+                  tbody#slider
 
-                        if (employeelist)
+                    if (malist)
 
 
-                            each employee in employeelist
-                                tr
-                                    td #{employee.employee_no}
-                                    td #{employee.first_name}
-                                    td #{employee.last_name}
-                                    td #{employee.phone}
-                                    td #{employee.mail}
-                                    td #{employee.department}
-                                    td.hidden #{employee.rights}
-                                    td
-                                        //a.pure-button(href='#{theurl}?selected_user=123')
+                        each employee in employeelist
+                            tr
+                              td #{employee.employee_no}
+                              td #{employee.first_name}
+                              td #{employee.last_name}
+                              td #{employee.phone}
+                              td #{employee.mail}
+                              td #{employee.department}
+                              td.hidden #{mitarbeiter.rights}
+                              td
+                                //a.pure-button(href='#{theurl}?selected_user=123')
+
+//(onclick="selectEmployee('" + mitarbeiter.id + "', '" + mitarbeiter.vorname + "', '" + mitarbeiter.nachname + "')")
+
+                    //tr(onclick="selectEmployee('" + ma.id + "', '" + ma.vorname + "', '" + ma.nachname + "')")
+                    //    td 2
+                    //    td vorname1
+                    //    td nachname1
+                    //    td 1234
+                    //    td vorname.nachname@irgendwas.com
+                    //    td Personal
+                    //tr(onclick="selectEmployee('" + ma.id + "', '" + ma.vorname + "', '" + ma.nachname + "')")
+                    //    td 3
+                    //    td vorname1
+                    //    td nachname1
+                    //    td 1234
+                    //    td vorname.nachname@irgendwas.com
+                    //    td Personal
+                    //tr(onclick="selectEmployee('" + ma.id + "', '" + ma.vorname + "', '" + ma.nachname + "')")
+                    //  td 4
+                    //  td vorname1
+                    //  td nachname1
+                    //  td 1234
+                    //  td vorname.nachname@irgendwas.com
+                    //  td Personal
+
+
 

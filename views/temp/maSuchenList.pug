@@ -4,12 +4,12 @@ block content
     form.pure-form(action='http://127.0.0.1:3000/ap2/maSuchen', method='get')
         label(for='vname')
             | Vorname:
-            input#vname(type='text', name='vorname')
+            input#vname(type='text', name='vorname', value=suche_vorname)
         label(for='zname')
             | Zuname:
-            input#zname(type='text', name='nachname')
+            input#zname(type='text', name='nachname', value=suche_nachname)
             button suchen
-    form(action='http://127.0.0.1:3000/ap2/fe')
+    //form(action='http://127.0.0.1:3000/ap2/fe')
         button Fehlzeiten
     table.fixed_headers.pure-table.pure-table-horizontal
         thead
@@ -28,4 +28,4 @@ block content
                     td= mitarbeiter.abteilung
                     td
                         a(href='/ap2/fe?maNr='+mitarbeiter.mitarbeiternummer)
-                          | hello world
+                          | FE
