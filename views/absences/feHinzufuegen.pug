@@ -1,28 +1,28 @@
 extends ../layout
 block content
     h1 Fehlzeit hinzufuegen
-    a #{Meldung}
-    form.pure-form(action='http://127.0.0.1:3000/ap2/feHinzufuegen', method='get')
+    form.pure-form(action='http://127.0.0.1:3000/ap2/feHinzufuegenA', method='get')
         | Von:
         br
-        input(type='date', name='vondate')
+        input(type='date', name='vondate', value=setVonDate)
         br
         |  Bis:
         br
-        input(type='date', name='bisdate')
+        input(type='date', name='bisdate', value=setBisDate)
         br
         input(type='hidden', name='maNr', value=maNummer)
         br
-        input(type='radio', name='kat', value='krank')
+        input(type='radio', name='kat', value='krank', checked=setKat == "krank")
         |  Krank
         br
-        input(type='radio', name='kat', value='urlaub')
+        input(type='radio', name='kat', value='urlaub', checked=setKat == "urlaub")
         |  Urlaub
         br
-        input(type='radio', name='kat', value='homeOffice')
+        input(type='radio', name='kat', value='homeOffice', checked=setKat == "homeOffice")
         |  Home Office
         br
-        input(type='radio', name='kat', value='abwesend')
+        input(type='radio', name='kat', value='abwesend', checked=setKat == "abwesend")
         |  Abwesend
         br
         input(type='submit', value='speichern')
+    h1 #{Meldung}

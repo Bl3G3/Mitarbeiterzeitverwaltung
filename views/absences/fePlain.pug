@@ -2,8 +2,6 @@ extends ../layout
 block content
     h1
         | Fehlzeiten verwalten
-    h2
-        |#{Meldung}
     form.pure-form(action='http://127.0.0.1:3000/ap2/fe', method='get')
         label(for='date')
             | Am:
@@ -13,3 +11,5 @@ block content
     form(method='get', action='http://127.0.0.1:3000/ap2/feHinzufuegen')
         input(type='hidden', name='maNr', value=maNr)
         button(type='submit') add
+    h1
+        | #{Meldung}
