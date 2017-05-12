@@ -146,6 +146,42 @@ exports.existsduplicate = function (vorname,nachname, callback)
 
 };
 
+exports.readList = function (employee_no, first_name, last_name, callback) {
+    var query = {};
+    if (employee_no)query.employee_no = employee_no;
+    if (first_name)query.first_name=first_name;
+    if (last_name)query.last_name=last_name;
+    Employee.find(query,
+        function (err, list) {
+            callback(err, list);
+    });
+};
+
+
+var mitarbeiter = new Mitarbeiter();
+mitarbeiter.mitarbeiternummer = req.body.manr;
+mitarbeiter.vorname = req.body.forname;
+mitarbeiter.name = req.body.surname;
+
+var query = {};
+if (mitarbeiter.mitarbeiternummer)
+    query.mitarbeiternummer = mitarbeiter.mitarbeiternummer;
+if (mitarbeiter.vorname)
+    query.vorname = mitarbeiter.vorname;
+if (mitarbeiter.name)
+    query.nachname = mitarbeiter.name;
+if (query){
+    Mitarbeiter.find(query, function(err, mas) {
+        if (err)
+            console.log(err);
+
+        console.log(mas.length);
+        res.render('index', { title: 'Express', lastaction: 'Eingestempelt', mitarbeiter: mitarbeiter, malist:mas});
+    });
+} else
+    res.render('index', { title: 'Express', lastaction: 'Eingestempelt', mitarbeiter: mitarbeiter});
+
+
 
 exports.list1 = function(callback) {
     Employee.find({}, function(err, users) {

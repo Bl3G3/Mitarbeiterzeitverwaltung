@@ -7,16 +7,16 @@ block employeeSelection
     .selectionDiv
 
 
-        form.pure-form(action="/", method="POST")
+        form.pure-form(action=#{theurl}, method="GET")
             fieldset
                 label(for="manr") #{theurl}
-                input#manrfield.inputField(name="manr" value=(mitarbeiter ? mitarbeiter.mitarbeiternummer : ""))
+                input#manrfield.inputField(name="manr")
 
                 label(for="forname") Vorname:
-                input#fornamefield.inputField(name="forname" value=(mitarbeiter ? mitarbeiter.vorname : ""))
+                input#fornamefield.inputField(name="forname")
 
                 label(for="surname") Nachname:
-                input(name="surname" id="surnamefield" value=(mitarbeiter ? mitarbeiter.name : ""))
+                input(name="surname" id="surnamefield")
 
                 button(type='submit').pure-button.search-button Suchen
                 //a.pure-button(onclick="$('#slider').slideToggle(200);return false;") Take
@@ -42,25 +42,17 @@ block employeeSelection
                     if (malist)
 
 
-                        each mitarbeiter in malist
+                        each employee in employeelist
                             tr
-                              td #{mitarbeiter.mitarbeiternummer}
-                              td #{mitarbeiter.vorname}
-                              td #{mitarbeiter.name}
-                              td #{mitarbeiter.telefon}
-                              td #{mitarbeiter.email}
-                              td #{mitarbeiter.abteilung}
-                              td.hidden #{mitarbeiter.rechte}
+                              td #{employee.employee_no}
+                              td #{employee.first_name}
+                              td #{employee.last_name}
+                              td #{employee.phone}
+                              td #{employee.mail}
+                              td #{employee.department}
+                              td.hidden #{mitarbeiter.rights}
                               td
-                                a.pure-button(onclick="selectEmployee('" + mitarbeiter.mitarbeiternummer + "', " +
-                                                                    "'" + mitarbeiter.vorname + "', " +
-                                                                    "'" + mitarbeiter.name + "'," +
-                                                                    "'" + mitarbeiter.telefon + "'," +
-                                                                    "'" + mitarbeiter.email + "'," +
-                                                                    "'" + mitarbeiter.abteilung + "'," +
-                                                                    "'" + mitarbeiter.rechte + "'," +
-
-                              ")")
+                                //a.pure-button(href='#{theurl}?selected_user=123')
 
 //(onclick="selectEmployee('" + mitarbeiter.id + "', '" + mitarbeiter.vorname + "', '" + mitarbeiter.nachname + "')")
 
