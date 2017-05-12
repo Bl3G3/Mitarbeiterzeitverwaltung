@@ -22,11 +22,13 @@ module.exports.onlyEmployees = function(req, res, next) {
 
 module.exports.onlyHR = function(req, res, next) {
     // first test if logged in and test for hr only in case of success
-    module.exports.onlyEmployees(req, res, function (req, res) {
-        if (req.user.rights) {
-            return next();
-        }
-        // send non hr-employees trying to access the url to the start page
-        return res.redirect("/");
-    });
+    if (!req.user){
+        return res.redirect(login_url);
+    }
+    if (req.user.rights) {
+        return next();
+    }
+    // send non hr-employees trying to access the url to the start page
+    return res.redirect("/");
+
 };
