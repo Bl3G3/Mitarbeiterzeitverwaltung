@@ -1,6 +1,7 @@
 var express = require('express');
 var Fehlzeit = require('../models/Fehlzeit');
 var Mitarbeiter = require('../models/mitarbeiter');
+var model = require('../modules/absences/ap2model.js');
 
 var router = express.Router();
 
@@ -58,23 +59,22 @@ router.get('/feAendernA', function (req, res) {
     }
 });
 
-
-// Ma Search for Fehlzeiten
 router.get('/maSuchen', function (req, res) {
-
     if (req.query.vorname === undefined || req.query.nachname === undefined) {
         res.render('temp/maSuchen');
         return;
     }
-    Mitarbeiter.find({
-        nachname: req.query.nachname,
-        vorname: req.query.vorname
-    }).exec(function (err, maList) {
-        res.render('temp/maSuchenList', {
-            'maList': maList,
-            'suche_vorname': req.query.vorname,
-            'suche_nachname': req.query.nachname
-        });
+    model.getMitarbeiterbyFullName(req.query.vorname,req.query.nachname,function (error,maList,meldung) {
+        if(error)
+        {
+            res.render('temp/maSuchen',{Meldung:meldung,searchFirstName:req.query.vorname,searchLastName:req.query.nachname});
+        }else{
+            res.render('temp/maSuchenList', {
+                'maList': maList,
+                'suche_vorname': req.query.vorname,
+                'suche_nachname': req.query.nachname
+            });
+        }
     });
 });
 
