@@ -1,6 +1,3 @@
-/**
- * Created by phl on 12.05.17.
- */
 var express = require('express');
 var Fehlzeit = require('../../models/Fehlzeit');
 var Mitarbeiter = require('../../models/mitarbeiter');
@@ -20,6 +17,7 @@ const Fehler_unexpected = "Es ist ein unerwarteter Fehler aufgetreten";
 
 //Meldungen
 const Meldung_Speicherung = "Die Speicherung war erfolgreich";
+const Meldung_Loeschen = "Die Löschung war erfolgreich";
 
 
 
@@ -39,9 +37,6 @@ module.exports.getMitarbeiterbyFullName = function (firstName, lastName, callbac
         nachname: lastName,
         vorname: firstName
     }).exec(function (err, maList) {
-
-
-
         if (err) {
             callback(err, maList, Fehler_getMitarbeiterByFullName_unexpected);
         } else {
@@ -78,7 +73,7 @@ module.exports.saveByParam = function (vondate, bisdate, kategorie, maNr, callba
                         }
                     });
                 }
-            })
+            });
         }
     });
 };

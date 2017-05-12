@@ -10,7 +10,95 @@ router.use(function timeLog(req, res, next) {
     next()
 });
 
-//Fehlzeiten ändern anzeigen
+router.get('/maSuchen', function (req, res) {
+    if (req.query.vorname === undefined || req.query.nachname === undefined) {
+        res.render('temp/maSuchen');
+        return;
+    }
+    model.getMitarbeiterbyFullName(req.query.vorname, req.query.nachname, function (error, maList, meldung) {
+        if (error) {
+            res.render('temp/maSuchen', {
+                Meldung: meldung,
+                searchFirstName: req.query.vorname,
+                searchLastName: req.query.nachname
+            });
+        } else {
+            res.render('temp/maSuchenList', {
+                'maList': maList,
+                'suche_vorname': req.query.vorname,
+                'suche_nachname': req.query.nachname
+            });
+        }
+    });
+});
+
+router.get('/fe', function (req, res) {
+    if (req.query.maNr === undefined) {
+        res.render('temp/maSuchen');
+    } else {
+        if (req.query.such_date === undefined) {
+            res.render('absences/fePlain', {maNr: req.query.maNr});
+        } else {//Fehlzeit suchen!
+            Fehlzeit.findByDate(req.query.such_date, req.query.maNr, function (error, feList, meldung) {
+                if (error) {
+                    res.render('absences/fePlain', {
+                        Meldung: meldung,
+                        maNr: req.query.maNr,
+                        suchDate: req.query.such_date
+                    });
+                } else {
+                    res.render('absences/fe', {
+                        feList: feList, maNr: req.query.maNr, gesuchtDate: req.query.such_date
+                    })
+                    ;
+                }
+            });
+        }
+    }
+});
+
+router.get('/feDelete', function (req, res) {
+    if (req.query.feId === undefined || req.query.maNr === undefined) {
+        if (req.query.maNr === undefined) {
+            res.render('temp/maSuchen');
+        } else if (req.query.feId === undefined) {
+            res.render('absences/fePlain', {maNr: req.query.maNr});
+        }
+    } else {
+        res.render('absences/feDelete', {deleteMaNr: req.query.maNr, deleteFeId: req.query.feId});
+    }
+});
+
+router.get('/feDeleteA', function (req, res) {
+    if (req.query.feId === undefined || req.query.maNr === undefined) {
+        if (req.query.maNr === undefined) {
+            res.render('temp/maSuchen');
+        } else if (req.query.feId === undefined) {
+            res.render('absences/fePlain', {maNr: req.query.maNr});
+        }
+    } else {
+        if (req.query.delete === undefined) {
+            res.render('absences/feDelete', {deleteMaNr: req.query.maNr, deleteFeId: req.query.feId});
+        } else {
+            if (req.query.delete === "1") {
+                Fehlzeit.deleteFeById(req.query.feId, function (error, message) {
+                    if (error) {
+                        res.render('absences/feDeleteA', {
+                            Meldung: message,
+                            deleteMaNr: req.query.maNr,
+                            deleteFeId: req.query.feId
+                        });
+                    } else {
+                        res.render('absences/feDeleteA', {Meldung: message, maNr: req.query.maNr});
+                    }
+                });
+            } else {
+                res.render('absences/feDeleteA', {Meldung: "Löschung findet nicht statt", maNr: req.query.maNr});
+            }
+        }
+    }
+});
+
 router.get('/feAendern', function (req, res) {
     if (req.query.feId === undefined || req.query.maNr === undefined) {
         if (req.query.maNr === undefined) {
@@ -58,49 +146,6 @@ router.get('/feAendernA', function (req, res) {
     }
 });
 
-router.get('/maSuchen', function (req, res) {
-    if (req.query.vorname === undefined || req.query.nachname === undefined) {
-        res.render('temp/maSuchen');
-        return;
-    }
-    model.getMitarbeiterbyFullName(req.query.vorname, req.query.nachname, function (error, maList, meldung) {
-        if (error) {
-            res.render('temp/maSuchen', {
-                Meldung: meldung,
-                searchFirstName: req.query.vorname,
-                searchLastName: req.query.nachname
-            });
-        } else {
-            res.render('temp/maSuchenList', {
-                'maList': maList,
-                'suche_vorname': req.query.vorname,
-                'suche_nachname': req.query.nachname
-            });
-        }
-    });
-});
-
-//Fehlzeitenseite in der man eine Fehlzeit selektieren kann und diese ändern kann.
-router.get('/fe', function (req, res) {
-    if (req.query.maNr === undefined) {
-        res.render('temp/maSuchen');
-    } else {
-        if (req.query.such_date === undefined) {
-            res.render('absences/fePlain', {maNr: req.query.maNr});
-        } else {//Fehlzeit suchen!
-            Fehlzeit.findByDate(req.query.such_date, req.query.maNr, function (error, feList, meldung) {
-                if (error) {
-                    res.render('absences/fePlain', {Meldung: meldung, maNr: req.query.maNr});
-                } else {
-                    res.render('absences/fe', {
-                        feList: feList, maNr: req.query.maNr, gesuchtDate: req.query.such_date
-                    })
-                    ;
-                }
-            });
-        }
-    }
-});
 
 router.get('/feHinzufuegen', function (req, res) {
     if (req.query.maNr === undefined) {

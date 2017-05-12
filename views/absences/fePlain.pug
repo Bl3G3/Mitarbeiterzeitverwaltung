@@ -5,7 +5,7 @@ block content
     form.pure-form(action='http://127.0.0.1:3000/ap2/fe', method='get')
         label(for='date')
             | Am:
-            input#vname(type='date', name='such_date')
+            input#vname(type='date', name='such_date', value=suchDate)
             input(type='hidden', name='maNr', value=maNr)
             button suchen
     form(method='get', action='http://127.0.0.1:3000/ap2/feHinzufuegen')

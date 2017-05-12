@@ -14,6 +14,7 @@ const Fehler_unexpected = "Es ist ein unerwarteter Fehler aufgetreten";
 
 //Meldungen
 const Meldung_Speicherung = "Die Speicherung war erfolgreich";
+const Meldung_Loeschen = "Die Löschung war erfolgreich";
 
 
 // Define our article schema
@@ -103,6 +104,27 @@ module.exports.findByDate = function (search_date, search_maNr, callback) {
     });
 };
 
+module.exports.deleteFeById = function (fe_Id, callback) {
+    var id = require('mongodb').ObjectID(fe_Id);
+    Fehlzeit.findOne({_id: id}, function (error, fe) {
+        if (error) {
+            callback(error, Fehler_unexpected);
+        } else {
+            if (fe === null) {
+                callback(true, Fehler_SucheNachId);
+            }
+            else {
+                fe.remove(function (error) {
+                    if (error) {
+                        callback(error, Fehler_LoeschenSpeicher);
+                    } else {
+                        callback(null, Meldung_Loeschen);
+                    }
+                });
+            }
+        }
+    });
+};
 
 
 
