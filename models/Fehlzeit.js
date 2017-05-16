@@ -11,7 +11,7 @@ const Fehler_LoeschenAbbruch = "Die Löschung findet nicht statt";
 const Fehler_SucheNachId = "Zu der Id gibt es keine Fehlzeit";
 const Fehler_SucheNachDate = "In diesem Zeitraum gibt es keine Fehlzeit";
 const Fehler_unexpected = "Es ist ein unerwarteter Fehler aufgetreten";
-
+const Fehler_Kategorie = "Die Kategorie muss den Wert urlaub, abwesend, homeOffice oder krank sein";
 //Meldungen
 const Meldung_Speicherung = "Die Speicherung war erfolgreich";
 const Meldung_Loeschen = "Die Löschung war erfolgreich";
@@ -30,11 +30,15 @@ var Fehlzeit = mongoose.model('Fehlzeit', FehlzeitenSchema);//Deklaration for fu
 module.exports = Fehlzeit;
 
 module.exports.check = function (fehlzeit, callback) {
-    //TODO Start Endzeitpunk falsch Meldung "Die Fehlzeit muss mindestens einen Tag dauern"
-    //TODO Es existiert eine Fehlzeit innerhalb des Zeitraums Meldiung "Es gibt in diesem Zeitraum schon eine Fehlzeit//im Pflichtenheft anders"
-    //TODO Die Daten sind undgültig Meldung " Bitte geben sie ein gültiges Datum ein"
-    //TODO Speicherung nicht erfolgreich --> Fehlmeldung
-    callback(null, "Fehlertext");
+    if (fehlzeit.bis < fehlzeit.von) {
+        callback(true, Fehler_StartEndFalsch);
+    } else {
+        if (!(fehlzeit.kategorie === "krank" || fehlzeit.kategorie === "urlaub" || fehlzeit.kategorie === "homeOffice" || fehlzeit.kategorie === "abwesend")) {
+            callback(true, Fehler_Kategorie);
+        } else {
+            callback(null);
+        }
+    }
 };
 
 module.exports.getFeById = function (_id, callback) {
@@ -48,8 +52,28 @@ module.exports.getFeById = function (_id, callback) {
     });
 };
 module.exports.timeRangeCheck = function (fehlzeit, callback) {
-    //TODO implementieren
-    callback(null, "schlaue Meldung, dass sie schon existiert");
+    Fehlzeit.find(
+        {
+            maNr: fehlzeit.maNr,
+            $or: [{von: {$lte: fehlzeit.von}, bis: {$gte: fehlzeit.von}},
+                {von: {$gte: fehlzeit.von}, bis: {$lte: fehlzeit.bis}},
+                {von: {$lte: fehlzeit.bis}, bis: {$gte: fehlzeit.bis}}]
+        }).exec(function (err, feList) {
+        console.log("Aufruf TIME RANGE CHECK");
+        console.log(feList.length);
+        console.log(feList);
+        if (err) {
+            callback(true, Fehler_unexpected);
+        } else {
+            if (feList.length === 0) {
+                console.log("wenn null dan passt");
+                callback(null);
+            } else {
+                console.log("wenn größer eins dann passt das");
+                callback(true, Fehler_FehlzeitZeitraum);
+            }
+        }
+    });
 };
 
 module.exports.saveById = function (_id, _von, _bis, _kat, callback) {

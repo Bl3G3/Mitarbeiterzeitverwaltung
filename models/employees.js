@@ -145,7 +145,7 @@ exports.existsduplicate = function (vorname,nachname, callback)
     });
 
 };
-
+/*
 exports.readList = function (employee_no, first_name, last_name, callback) {
     var query = {};
     if (employee_no)query.employee_no = employee_no;
@@ -181,7 +181,7 @@ if (query){
 } else
     res.render('index', { title: 'Express', lastaction: 'Eingestempelt', mitarbeiter: mitarbeiter});
 
-
+*/
 
 exports.list1 = function(callback) {
     Employee.find({}, function(err, users) {
