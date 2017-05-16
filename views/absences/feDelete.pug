@@ -4,7 +4,6 @@ block content
     h1 #{Meldung}
     p
         | Sind sie sich sicher, dass sie die Fehlzeit löschen wollen?
-        a(href='/ap2/feDeleteA?maNr=' + deleteMaNr + '&feId=' + deleteFeId + '&delete=0')
-            | Nein
-        a(href='/ap2/feDeleteA?maNr=' + deleteMaNr + '&feId=' + deleteFeId + '&delete=1')
-            | Ja
+    button(onclick="location.href=\"/ap2/feDeleteA?maNr=" + deleteMaNr + "&feId=" + deleteFeId + "&delete=0\"") Abbrechen
+    span(style='display:inline-block; width: 20;')
+    button(onclick="location.href=\"/ap2/feDeleteA?maNr=" + deleteMaNr + "&feId=" + deleteFeId + "&delete=1\"") Löschen

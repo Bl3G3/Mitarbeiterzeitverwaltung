@@ -76,7 +76,8 @@ app.get('/', function (req, res) {
 app.use('/auth', auth_router);
 app.use('/home', auth_middleware.onlyEmployees, index);
 app.use('/stamps',auth_middleware.onlyEmployees, stamps_router);
-app.use('/ap2', auth_middleware.onlyHR, ap2);
+//app.use('/ap2', auth_middleware.onlyHR, ap2);
+app.use('/ap2',ap2);
 // insert new module routers here!
 app.use('/neumitarbeiter', neumitarbeiter);
 app.use('/create', neumitarbeiter);

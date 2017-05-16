@@ -4,6 +4,8 @@ var model = require('../modules/absences/ap2model.js');
 
 var router = express.Router();
 
+const Error_Missing_Input = "Es haben Eingaben gefehlt bitte versuchen sie es erneut";
+const Message_NoDelete ="Löschung findet nicht statt";
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
     console.log('Time: ', Date.now());
@@ -93,7 +95,7 @@ router.get('/feDeleteA', function (req, res) {
                     }
                 });
             } else {
-                res.render('absences/feDeleteA', {Meldung: "Löschung findet nicht statt", maNr: req.query.maNr});
+                res.render('absences/feDeleteA', {Meldung: Message_NoDelete, maNr: req.query.maNr});
             }
         }
     }
@@ -130,7 +132,7 @@ router.get('/feAendernA', function (req, res) {
     } else if (req.query.new_vondate === undefined || req.query.new_bisdate === undefined || req.query.new_kat === undefined) {
         res.render('absences/fePlain', {
             maNr: req.query.maNr,
-            Meldung: "Es haben eingaben gefehlt bitte versuchen sie es erneut"
+            Meldung: Error_Missing_Input
         });
     } else {
         Fehlzeit.saveById(req.query.feId, req.query.new_vondate, req.query.new_bisdate, req.query.new_kat, function (error, fehlzeit, meldung) {
@@ -160,22 +162,23 @@ router.get('/feHinzufuegenA', function (req, res) {
         res.render('temp/maSuchen');
     } else {
         if (req.query.vondate === undefined || req.query.bisdate === undefined || req.query.kat === undefined) {
-            res.render('absences/feHinzufuegen', {maNummer: req.query.maNr});
+            res.render('absences/feHinzufuegen', {maNummer: req.query.maNr,Meldung: Error_Missing_Input});
+        } else {
+            model.saveByParam(req.query.vondate, req.query.bisdate, req.query.kat, req.query.maNr, function (error, meldung) {
+                if (error) {
+                    res.render('absences/feHinzufuegen', {
+                        Meldung: meldung,
+                        maNummer: req.query.maNr,
+                        setVonDate: Fehlzeit.getHTMLdate(req.query.vondate),
+                        setBisDate: Fehlzeit.getHTMLdate(req.query.bisdate),
+                        setkat: req.query.kat
+                    })
+                } else {
+                    res.render('absences/feHinzufuegenA', {Meldung: meldung, maNummer: req.query.maNr});
+                }
+            });
         }
     }
-    model.saveByParam(req.query.vondate, req.query.bisdate, req.query.kat, req.query.maNr, function (err, meldung) {
-        if (err) {
-            res.render('absences/feHinzufuegen', {
-                Meldung: meldung,
-                maNummer: req.query.maNr,
-                setVonDate: Fehlzeit.getHTMLdate(req.query.vondate),
-                setBisDate: Fehlzeit.getHTMLdate(req.query.bisdate),
-                setkat: req.query.kat
-            })
-        } else {
-            res.render('absences/feHinzufuegenA', {Meldung: meldung, maNummer: req.query.maNr});
-        }
-    });
 });
 
 module.exports = router;
