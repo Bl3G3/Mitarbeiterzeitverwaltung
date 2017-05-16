@@ -36,7 +36,7 @@ var neumitarbeiter = require('./routes/neumitarbeiter');
 
 var app = express();
 
-mongoose.connect('mongodb://localhost/node-comment');
+//mongoose.connect('mongodb://localhost/node-comment');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
