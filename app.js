@@ -73,7 +73,8 @@ app.get('/', function (req, res) {
     res.redirect('/home');
 });
 //module router
-app.use('/auth', auth_router);
+//app.use('/auth', auth_router);
+//app.post('/login',passport.authenticate('local',{successRedirect: '/',failureRedirect: '/login'})); //not finished and therefore not deployed yet
 app.use('/home', auth_middleware.onlyEmployees, index);
 app.use('/stamps',auth_middleware.onlyEmployees, stamps_router);
 //app.use('/ap2', auth_middleware.onlyHR, ap2);
@@ -99,8 +100,8 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
- //app.listen(3000, function () {
- //    console.log('Example app listening on port 3000!')
- //});
+ app.listen(3000, function () {
+     console.log('Example app listening on port 3000!')
+ });
 
 module.exports = app;
