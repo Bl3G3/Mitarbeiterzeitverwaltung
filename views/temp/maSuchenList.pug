@@ -18,7 +18,8 @@ block content
                 th Vorname
                 th Nachname
                 th Abteilung
-                th FAlink
+                th FE
+                th MA
         tbody
             for mitarbeiter in maList
                 tr
@@ -29,3 +30,6 @@ block content
                     td
                         a(href='/ap2/fe?maNr='+mitarbeiter.mitarbeiternummer)
                           | FE
+                    td
+                        a(href='/employees/edit?maNr=' + mitarbeiter.mitarbeiternummer)
+                            | MA

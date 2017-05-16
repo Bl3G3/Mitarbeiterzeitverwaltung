@@ -5,7 +5,7 @@
 var assert = require("chai").assert;
 
 // function under test
-var fut = require("../models/Fehlzeit");
+var fut = require("../../models/Fehlzeit");
 var check = 0;
 
 describe("Fehlzeit.check", function () {
@@ -54,7 +54,6 @@ describe('Fehlzeit.check Test der Kategorientests', function () {
         {it: '', options: {var1: '', res: 1}},
         {it: '12345', options: {var1: 12345, res: 1}},
         {it: '2.5', options: {var1: 2.5, res: 1}}
-
     ];
 
     // setup for all testcases (executed once!)

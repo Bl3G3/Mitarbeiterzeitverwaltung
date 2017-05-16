@@ -13,6 +13,11 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.get('/maSuchen', function (req, res) {
+    //Mit diesen Parametern maSuchen aufrufen um die Richtige Seite zu generieren
+    //req.query.tableHeader;
+    //req.query.linkName; //So heißt der text in der Tabelle
+    //req.query.link
+    //req.query.siteHeadline;
     if (req.query.vorname === undefined || req.query.nachname === undefined) {
         res.render('temp/maSuchen');
         return;
@@ -164,7 +169,7 @@ router.get('/feHinzufuegenA', function (req, res) {
         if (req.query.vondate === undefined || req.query.bisdate === undefined || req.query.kat === undefined) {
             res.render('absences/feHinzufuegen', {maNummer: req.query.maNr,Meldung: Error_Missing_Input});
         } else {
-            model.saveByParam(req.query.vondate, req.query.bisdate, req.query.kat, req.query.maNr, function (error, meldung) {
+            Fehlzeit.saveByParam(req.query.vondate, req.query.bisdate, req.query.kat, req.query.maNr, function (error, meldung) {
                 if (error) {
                     res.render('absences/feHinzufuegen', {
                         Meldung: meldung,

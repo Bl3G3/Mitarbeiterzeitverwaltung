@@ -149,6 +149,33 @@ module.exports.deleteFeById = function (fe_Id, callback) {
         }
     });
 };
+module.exports.saveByParam = function (vondate, bisdate, kategorie, maNr, callback) {
+    var fe = new Fehlzeit();
+    fe.von = vondate;
+    fe.bis = bisdate;
+    fe.kategorie = kategorie;
+    fe.maNr = maNr;
+    Fehlzeit.check(fe, function (error, meldung) {
+        if (error) {
+            callback(error,meldung);
+        } else {
+            Fehlzeit.timeRangeCheck(fe, function (error, meldung) {
+                if (error) {
+                    callback(error, meldung);
+                } else {
+                    fe.save(function (err) {
+                        if (err) {
+                            callback(err, Fehler_Speicherung);
+                        } else {
+                            callback(null,Meldung_Speicherung);
+                        }
+                    });
+                }
+            });
+        }
+    });
+};
+
 
 
 
