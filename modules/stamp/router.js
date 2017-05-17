@@ -3,8 +3,8 @@
  */
 var express = require('express');
 var passport = require('passport');
-var auth_middleware = require('../auth/middleware')
-var employees = require('../../models/employees');
+// var auth_middleware = require('../auth/middleware')
+var employees = require('../../models/mitarbeiter');
 var stamps = require('../../models/stamps')
 var router = express.Router();
 
@@ -17,10 +17,10 @@ var router = express.Router();
 
 
 // /admin only for hr's..
-router.all('/admin', function (req, res, next) {
-    auth_middleware.onlyHR(req, res, next);
-    next();
-});
+// router.all('/admin', function (req, res, next) {
+//     auth_middleware.onlyHR(req, res, next);
+//     next();
+// });
 
 router.get('/admin', function (req, res, next) {
     if (req.param('selected_employee')){

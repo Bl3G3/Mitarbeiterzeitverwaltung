@@ -19,18 +19,18 @@ router.get('/maSuchen', function (req, res) {
     //req.query.link
     //req.query.siteHeadline;
     if (req.query.vorname === undefined || req.query.nachname === undefined) {
-        res.render('temp/maSuchen');
+        res.render('employeeSearch/maSuchen');
         return;
     }
     model.getMitarbeiterbyFullName(req.query.vorname, req.query.nachname, function (error, maList, meldung) {
         if (error) {
-            res.render('temp/maSuchen', {
+            res.render('employeeSearch/maSuchen', {
                 Meldung: meldung,
                 searchFirstName: req.query.vorname,
                 searchLastName: req.query.nachname
             });
         } else {
-            res.render('temp/maSuchenList', {
+            res.render('employeeSearch/maSuchenList', {
                 'maList': maList,
                 'suche_vorname': req.query.vorname,
                 'suche_nachname': req.query.nachname
@@ -41,7 +41,7 @@ router.get('/maSuchen', function (req, res) {
 
 router.get('/fe', function (req, res) {
     if (req.query.maNr === undefined) {
-        res.render('temp/maSuchen');
+        res.render('employeeSearch/maSuchen');
     } else {
         if (req.query.such_date === undefined) {
             res.render('absences/fePlain', {maNr: req.query.maNr});
@@ -67,7 +67,7 @@ router.get('/fe', function (req, res) {
 router.get('/feDelete', function (req, res) {
     if (req.query.feId === undefined || req.query.maNr === undefined) {
         if (req.query.maNr === undefined) {
-            res.render('temp/maSuchen');
+            res.render('employeeSearch/maSuchen');
         } else if (req.query.feId === undefined) {
             res.render('absences/fePlain', {maNr: req.query.maNr});
         }
@@ -79,7 +79,7 @@ router.get('/feDelete', function (req, res) {
 router.get('/feDeleteA', function (req, res) {
     if (req.query.feId === undefined || req.query.maNr === undefined) {
         if (req.query.maNr === undefined) {
-            res.render('temp/maSuchen');
+            res.render('employeeSearch/maSuchen');
         } else if (req.query.feId === undefined) {
             res.render('absences/fePlain', {maNr: req.query.maNr});
         }
@@ -109,7 +109,7 @@ router.get('/feDeleteA', function (req, res) {
 router.get('/feAendern', function (req, res) {
     if (req.query.feId === undefined || req.query.maNr === undefined) {
         if (req.query.maNr === undefined) {
-            res.render('temp/maSuchen');
+            res.render('employeeSearch/maSuchen');
         } else if (req.query.feId === undefined) {
             res.render('absences/fePlain', {maNr: req.query.maNr});
         }
@@ -131,7 +131,7 @@ router.get('/feAendern', function (req, res) {
 
 router.get('/feAendernA', function (req, res) {
     if (req.query.maNr === undefined) {
-        res.render('temp/maSuchen');
+        res.render('employeeSearch/maSuchen');
     } else if (req.query.feId === undefined) {
         res.render('absences/fePlain', {maNr: req.query.maNr});
     } else if (req.query.new_vondate === undefined || req.query.new_bisdate === undefined || req.query.new_kat === undefined) {
@@ -156,7 +156,7 @@ router.get('/feAendernA', function (req, res) {
 
 router.get('/feHinzufuegen', function (req, res) {
     if (req.query.maNr === undefined) {
-        res.render('temp/maSuchen');
+        res.render('employeeSearch/maSuchen');
     } else {
         res.render('absences/feHinzufuegen', {maNummer: req.query.maNr});
     }
@@ -164,7 +164,7 @@ router.get('/feHinzufuegen', function (req, res) {
 
 router.get('/feHinzufuegenA', function (req, res) {
     if (req.query.maNr === undefined) {
-        res.render('temp/maSuchen');
+        res.render('employeeSearch/maSuchen');
     } else {
         if (req.query.vondate === undefined || req.query.bisdate === undefined || req.query.kat === undefined) {
             res.render('absences/feHinzufuegen', {maNummer: req.query.maNr,Meldung: Error_Missing_Input});

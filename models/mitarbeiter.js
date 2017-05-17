@@ -27,7 +27,7 @@ Mitarbeiterschema.methods.set_password = function(password, callback) {
      callback();
      });*/
 };
-mongoose.model('Mitarbeiter', Mitarbeiterschema);
+mongoose.model('Mitarbeiter', Mitarbeiterschema, 'Mitarbeiter');
 
 var Mitarbeiter = mongoose.model('Mitarbeiter');
 exports.Mitarbeiter = Mitarbeiter;
@@ -128,6 +128,6 @@ exports.existsduplicate = function (vorname,nachname, callback)
 
 
 
-module.exports = mongoose.model('Mitarbeiter', Mitarbeiterschema, 'Mitarbeiter');
+// exports.model = mongoose.model('Mitarbeiter', Mitarbeiterschema, 'Mitarbeiter');
 
 

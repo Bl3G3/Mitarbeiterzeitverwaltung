@@ -27,13 +27,13 @@ module.exports = ap2model;
 
 module.exports.test = function (consoleout) {
     console.log(consoleout);
-    Mitarbeiter.find({}).exec(function (err, maList) {
+    Mitarbeiter.Mitarbeiter.find({}).exec(function (err, maList) {
         console.log(maList);
     });
 };
 
 module.exports.getMitarbeiterbyFullName = function (firstName, lastName, callback) {
-    Mitarbeiter.find({
+    Mitarbeiter.Mitarbeiter.find({
         nachname: lastName,
         vorname: firstName
     }).exec(function (err, maList) {
