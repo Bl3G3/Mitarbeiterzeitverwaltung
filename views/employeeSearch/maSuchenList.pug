@@ -20,6 +20,7 @@ block content
                 th Abteilung
                 th FE
                 th MA
+                th ZS
         tbody
             for mitarbeiter in maList
                 tr
@@ -33,3 +34,6 @@ block content
                     td
                         a(href='/employees/edit?maNr=' + mitarbeiter.mitarbeiternummer)
                             | MA
+                    td
+                        a(href='/stamps/admin?maNr=' + mitarbeiter.mitarbeiternummer)
+                            | ZS

@@ -36,15 +36,16 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/newstamp', function (req, res, next) {
-    if (req.user){
-        stamps.create(req.user.mitarbeiternummer, function (err) {
+    // if (req.user){
+        //TODO change to req.manr, when session is finished.
+        stamps.create(11, function (err) {
             if (err)console.log(err);
             res.redirect('/home');
 
         });
-    } else {
-        res.redirect('/home');
-    }
+    // } else {
+    //     res.redirect('/home');
+    // }
 
 });
 
