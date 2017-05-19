@@ -19,12 +19,12 @@ router.get('/maSuchen', function (req, res) {
     //req.query.linkName; //So heißt der text in der Tabelle
     //req.query.link
     //req.query.siteHeadline;
-    if (req.query.tableHeader === undefined || req.query.linkName === undefined || req.query.link === undefined || req.query.siteHeader === undefined) {
+    if (req.query.tableHeader ===    undefined || req.query.linkName === undefined || req.query.link === undefined || req.query.siteHeader === undefined) {
         res.send("Es ist ein unerwarteter Fehler aufgetreten");
     } else {
         if (req.query.vorname === undefined || req.query.nachname === undefined) {
             console.log(req.query.link);
-            res.render('temp/maSuchen', {
+            res.render('employeeSearch/maSuchen', {
                 tableHeader: req.query.tableHeader,
                 linkName: req.query.linkName,
                 link: req.query.link,
@@ -36,7 +36,7 @@ router.get('/maSuchen', function (req, res) {
         model.getMitarbeiterbyFullName(req.query.vorname, req.query.nachname, function (error, maList, meldung) {
             if (error) {
 
-                res.render('temp/maSuchen', {
+                res.render('employeeSearch/maSuchen', {
                     tableHeader: req.query.tableHeader,
                     linkName: req.query.linkName,
                     link: req.query.link,
@@ -47,7 +47,7 @@ router.get('/maSuchen', function (req, res) {
                     maList:emptylist
                 });
             } else {
-                res.render('temp/maSuchen', {
+                res.render('employeeSearch/maSuchen', {
                     tableHeader: req.query.tableHeader,
                     linkName: req.query.linkName,
                     link: req.query.link,

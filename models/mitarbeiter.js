@@ -29,6 +29,7 @@ Mitarbeiterschema.methods.set_password = function(password, callback) {
 mongoose.model('Mitarbeiter', Mitarbeiterschema, 'Mitarbeiter');
 var Mitarbeiter = mongoose.model('Mitarbeiter');
 exports.Mitarbeiter = Mitarbeiter;
+module.exports = Mitarbeiter;
 
 exports.create = function(mitarbeiternummer, vorname, nachname, aktiv, strasse, ort, telefon, email, abteilung, persorechte, benutzername, callback) {
     // keine Prüfung auf doppelte!
@@ -160,6 +161,6 @@ exports.existsduplicate = function (vorname,nachname, callback)
 
 
 
-// exports.model = mongoose.model('Mitarbeiter', Mitarbeiterschema, 'Mitarbeiter');
+//exports.model = mongoose.model('Mitarbeiter', Mitarbeiterschema, 'Mitarbeiter');
 
 
