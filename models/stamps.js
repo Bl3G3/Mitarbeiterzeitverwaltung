@@ -17,6 +17,7 @@ var Stampschema = Schema({
 mongoose.model('Stamp', Stampschema, 'Stamp');
 
 var Stamp = mongoose.model('Stamp');
+// var Stamp = mongoose.model('Stamp', Stampschema, 'Stamp');
 exports.Stamp = Stamp;
 
 exports.create = function (employee_no, callback) {
@@ -65,8 +66,8 @@ exports.update = function (stamp_no, employee_no, timestamp, callback) {
 };
 
 exports.updateTime = function (stamp_no, employee_no, time, callback) {
-    var timeregex = /^[0-9]|1[0-9]|2[0-3]:[0-5][0-9] to 0[0-9]|1[0-9]|2[0-3]:[0-5][0-9]$/;
-    if (timeregex.test(time)){
+    if (!checkTime(time)){
+
         exports.read(stamp_no, employee_no, function (err, doc) {
             if (err) {
                 console.log("error in read.. "+err);
@@ -90,10 +91,23 @@ exports.updateTime = function (stamp_no, employee_no, time, callback) {
             }
         })
     } else {
-        callback("input is not a time.. ")
+        callback("InputError")
     }
 
 };
+
+function checkTime(input){
+    var parts = input.match(/(\d+)/g);
+    if (parts.length == 2){
+        if (parts[0] < 24 && parts[1] < 60){
+            return null;
+        } else {
+            return "not a valid Time!";
+        }
+    } else {
+        return "wrong format!";
+    }
+}
 
 exports.readLast = function (emplyee_no, callback) {
     Stamp.find({employee_no: emplyee_no},{}, {limit:1, sort: {stamp_no: -1}}, function (err, doc) {
@@ -108,11 +122,11 @@ exports.read = function (stamp_no, employee_no, callback) {
 
 };
 
-exports.readList = function (employee_no, callback) {
-    Stamp.find({employee_no: employee_no}, function (err, list) {
-        callback(err, list);
-    });
-};
+// exports.readList = function (employee_no, callback) {
+//     Stamp.find({employee_no: employee_no}, function (err, list) {
+//         callback(err, list);
+//     });
+// };
 
 exports.readList = function (employee_no, fromdate, tilldate, callback) {
 
@@ -130,8 +144,10 @@ exports.readList = function (employee_no, fromdate, tilldate, callback) {
     if (from && till){
         Stamp.find(
             {"employee_no": employee_no,
-                "timestamp": {$gte:from},
-                "timestamp": {$lte:till},
+                $and:[{"timestamp": {$gte:from}},
+                    {"timestamp":{$lte:till}}]
+                // "timestamp": {$gte:from, $lte:till}
+                // "timestamp": {$lte:till},
 
             },
             function (err, list) {
