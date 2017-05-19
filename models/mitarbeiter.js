@@ -20,20 +20,18 @@ var Mitarbeiterschema = Schema({
     passwort: String
 });
 Mitarbeiterschema.methods.set_password = function(password, callback) {
+    //use bcrypt to encrypt password
     this.password = bcrypt.hashSync(password);
     return callback();
-    /*bcrypt.hash(password, null, null, function(err, hash) {
-     Employee.password = hash;
-     callback();
-     });*/
 };
-mongoose.model('Mitarbeiter', Mitarbeiterschema, 'Mitarbeiter');
 
+//create exported Model
+mongoose.model('Mitarbeiter', Mitarbeiterschema, 'Mitarbeiter');
 var Mitarbeiter = mongoose.model('Mitarbeiter');
 exports.Mitarbeiter = Mitarbeiter;
 
 exports.create = function(mitarbeiternummer, vorname, nachname, aktiv, strasse, ort, telefon, email, abteilung, persorechte, benutzername, callback) {
-    //to do prüfen das es kenen gibt
+    // keine Prüfung auf doppelte!
     var newMitarbeiter = new Mitarbeiter();
     newMitarbeiter.mitarbeiternummer = mitarbeiternummer;
     newMitarbeiter.vorname = vorname;
@@ -55,8 +53,44 @@ exports.create = function(mitarbeiternummer, vorname, nachname, aktiv, strasse, 
         {callback();}
     });
 };
-exports.update = function(mitarbeiternummer, vorname, nachname, aktiv, strasse, ort, telefon, email, abteilung, persorechte, benutzername, callback) {
 
+// just like the function above - id is not set by param, but by the function itself
+exports.createNext  = function(vorname, nachname, aktiv, strasse, ort, telefon, email, abteilung, persorechte, benutzername, callback) {
+    exports.readLastID(function (err, id) {
+        var newMitarbeiter = new Mitarbeiter();
+        newMitarbeiter.mitarbeiternummer = id +1;
+        newMitarbeiter.vorname = vorname;
+        newMitarbeiter.nachname = nachname;
+        newMitarbeiter.aktiv = aktiv;
+        newMitarbeiter.strasse = strasse;
+        newMitarbeiter.ort = ort;
+        newMitarbeiter.telefon = telefon;
+        newMitarbeiter.email = email;
+        newMitarbeiter.abteilung = abteilung;
+        newMitarbeiter.rechte = perso;
+        newMitarbeiter.benutzername = benutzername;
+        newMitarbeiter.save(function(err) {
+            if (err)
+            {
+                callback(err);
+            }
+            else
+            {callback();}
+        });
+    });
+
+};
+
+//read last id, to create new employees
+exports.readLastID = function (callback) {
+    Mitarbeiter.find({}, {limit:1, sort: {mitarbeiternummer: -1}}, function (err, doc) {
+        callback(err, doc[0].mitarbeiternummer);
+    });
+};
+
+
+exports.update = function(mitarbeiternummer, vorname, nachname, aktiv, strasse, ort, telefon, email, abteilung, persorechte, benutzername, callback) {
+    // get object to change and override
     exports.read(id, function(err, doc) {
         if (err) callback(err);
         else {
@@ -98,8 +132,6 @@ exports.set_password = function(id, password, callback) {
 
 exports.read = function(id, callback) {
     Mitarbeiter.findOne({ mitarbeiternummer: id }, function(err, doc) {
-        //if (err) callback(err);
-        //else
         callback(err,doc);
     });
 };
