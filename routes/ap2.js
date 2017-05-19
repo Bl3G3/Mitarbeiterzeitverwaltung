@@ -5,7 +5,7 @@ var model = require('../modules/absences/ap2model.js');
 var router = express.Router();
 
 const Error_Missing_Input = "Es haben Eingaben gefehlt bitte versuchen sie es erneut";
-const Message_NoDelete ="Löschung findet nicht statt";
+const Message_NoDelete = "Löschung findet nicht statt";
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
     console.log('Time: ', Date.now());
@@ -13,30 +13,52 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.get('/maSuchen', function (req, res) {
+    var emptylist = [];
     //Mit diesen Parametern maSuchen aufrufen um die Richtige Seite zu generieren
     //req.query.tableHeader;
     //req.query.linkName; //So heißt der text in der Tabelle
     //req.query.link
     //req.query.siteHeadline;
-    if (req.query.vorname === undefined || req.query.nachname === undefined) {
-        res.render('temp/maSuchen');
-        return;
-    }
-    model.getMitarbeiterbyFullName(req.query.vorname, req.query.nachname, function (error, maList, meldung) {
-        if (error) {
+    if (req.query.tableHeader === undefined || req.query.linkName === undefined || req.query.link === undefined || req.query.siteHeader === undefined) {
+        res.send("Es ist ein unerwarteter Fehler aufgetreten");
+    } else {
+        if (req.query.vorname === undefined || req.query.nachname === undefined) {
+            console.log(req.query.link);
             res.render('temp/maSuchen', {
-                Meldung: meldung,
-                searchFirstName: req.query.vorname,
-                searchLastName: req.query.nachname
+                tableHeader: req.query.tableHeader,
+                linkName: req.query.linkName,
+                link: req.query.link,
+                siteHeadline: req.query.siteHeadline,
+                maList :emptylist
             });
-        } else {
-            res.render('temp/maSuchenList', {
-                'maList': maList,
-                'suche_vorname': req.query.vorname,
-                'suche_nachname': req.query.nachname
-            });
+            return;
         }
-    });
+        model.getMitarbeiterbyFullName(req.query.vorname, req.query.nachname, function (error, maList, meldung) {
+            if (error) {
+
+                res.render('temp/maSuchen', {
+                    tableHeader: req.query.tableHeader,
+                    linkName: req.query.linkName,
+                    link: req.query.link,
+                    siteHeadline: req.query.siteHeadline,
+                    Meldung: meldung,
+                    searchFirstName: req.query.vorname,
+                    searchLastName: req.query.nachname,
+                    maList:emptylist
+                });
+            } else {
+                res.render('temp/maSuchen', {
+                    tableHeader: req.query.tableHeader,
+                    linkName: req.query.linkName,
+                    link: req.query.link,
+                    siteHeadline: req.query.siteHeadline,
+                    maList: maList,
+                    suche_vorname: req.query.vorname,
+                    suche_nachname: req.query.nachname
+                });
+            }
+        });
+    }
 });
 
 router.get('/fe', function (req, res) {
@@ -144,10 +166,10 @@ router.get('/feAendernA', function (req, res) {
             if (error) {
                 res.render('absences/feAendernA', {
                     Meldung: meldung,
-                    maNr: fehlzeit.maNr
+                    maNr: req.query.maNr
                 });
             } else {
-                res.render('absences/feAendernA', {Meldung: meldung, maNr: fehlzeit.maNr});
+                res.render('absences/feAendernA', {Meldung: meldung, maNr: req.query.maNr});
             }
         });
     }
@@ -167,7 +189,7 @@ router.get('/feHinzufuegenA', function (req, res) {
         res.render('temp/maSuchen');
     } else {
         if (req.query.vondate === undefined || req.query.bisdate === undefined || req.query.kat === undefined) {
-            res.render('absences/feHinzufuegen', {maNummer: req.query.maNr,Meldung: Error_Missing_Input});
+            res.render('absences/feHinzufuegen', {maNummer: req.query.maNr, Meldung: Error_Missing_Input});
         } else {
             Fehlzeit.saveByParam(req.query.vondate, req.query.bisdate, req.query.kat, req.query.maNr, function (error, meldung) {
                 if (error) {

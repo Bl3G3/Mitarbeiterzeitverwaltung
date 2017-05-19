@@ -1,9 +1,11 @@
 extends ../layout
 block content
-    h1 Fehlzeit löschen
-    h1 #{Meldung}
-    p
-        | Sind sie sich sicher, dass sie die Fehlzeit löschen wollen?
-    button(onclick="location.href=\"/ap2/feDeleteA?maNr=" + deleteMaNr + "&feId=" + deleteFeId + "&delete=0\"") Abbrechen
-    span(style='display:inline-block; width: 20;')
-    button(onclick="location.href=\"/ap2/feDeleteA?maNr=" + deleteMaNr + "&feId=" + deleteFeId + "&delete=1\"") Löschen
+    .content
+        h1 Fehlzeit löschen
+        h1 #{Meldung}
+        p
+            | Sind sie sich sicher, dass sie die Fehlzeit löschen wollen?
+        .pure-button-group(role='group')
+            button.pure-button(onclick="location.href=\"/ap2/feDeleteA?maNr=" + deleteMaNr + "&feId=" + deleteFeId + "&delete=0\"") Abbrechen
+            span(style='display:inline-block; width: 20;')
+            button.pure-button.pure-button-active(onclick="location.href=\"/ap2/feDeleteA?maNr=" + deleteMaNr + "&feId=" + deleteFeId + "&delete=1\"") Löschen

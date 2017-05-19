@@ -1,14 +1,37 @@
 extends ../layout
 block content
-    h1 Mitarbeiter suchen #{test}
-    form.pure-form(action='http://127.0.0.1:3000/ap2/maSuchen', method='get')
-        label(for='vname')
-            | Vorname:
-            input#vname(type='text', name='vorname',value = searchFirstName)
-        label(for='zname')
-            | Nachname:
-            input#zname(type='text', name='nachname',value = searchLastName)
-            button suchen
-    h1 #{Meldung}
-    //form(action='http://127.0.0.1:3000/ap2/fe')
-        button Fehlzeiten
+    .content
+        h1 #{siteHeadline}
+        form.pure-form-aligned(action='http://127.0.0.1:3000/ap2/maSuchen', method = 'get')
+            fieldset
+                .pure-control-group
+                    label(for='vname') Vorname
+                    input#vname(type='text', name='vorname', value=suche_vorname)
+                .pure-control-group
+                    label(for='zname') Nachname
+                    input#zname(type='text', name='nachname', value=suche_nachname)
+                    input(type='hidden', name='siteHeader', value=siteHeadline)
+                    input(type='hidden', name='tableHeader', value=tableHeader)
+                    input(type='hidden', name='link', value=link)
+                    input(type='hidden', name='linkName', value=linkName)
+                .pure-controls
+                    button.pure-button.pure-button-primary suchen
+        h1 #{Meldung}
+        table.fixed_headers.pure-table.pure-table-horizontal(style='height:100px;overflow:auto;')
+            thead
+                tr
+                    th MitarbeiterNr
+                    th Vorname
+                    th Nachname
+                    th Abteilung
+                    th #{tableHeader}
+            tbody
+                for mitarbeiter in maList
+                    tr
+                        td= mitarbeiter.mitarbeiternummer
+                        td= mitarbeiter.vorname
+                        td= mitarbeiter.nachname
+                        td= mitarbeiter.abteilung
+                        td
+                            a(href=link +'?maNr=' + mitarbeiter.mitarbeiternummer)
+                                | #{linkName}

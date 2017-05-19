@@ -1,15 +1,18 @@
 extends ../layout
 block content
-    h1
-        | Fehlzeiten verwalten
-    form.pure-form(action='http://127.0.0.1:3000/ap2/fe', method='get')
-        label(for='date')
-            | Am:
-            input#vname(type='date', name='such_date', value=suchDate)
+    .content
+        h1 Fehlzeiten verwalten
+        form(method='get', action='http://127.0.0.1:3000/ap2/feHinzufuegen')
             input(type='hidden', name='maNr', value=maNr)
-            button suchen
-    form(method='get', action='http://127.0.0.1:3000/ap2/feHinzufuegen')
-        input(type='hidden', name='maNr', value=maNr)
-        button(type='submit') add
-    h1
-        | #{Meldung}
+            button.pure-button(type='submit') Fehlzeit hinzufügen
+        h2 Fehlzeiten bearbeiten
+        form.pure-form-aligned(action='http://127.0.0.1:3000/ap2/fe', method='get')
+            fieldset
+                .pure-control-group
+                    label(for='date') Am
+                    input#vname(type='date', name='such_date', value=suchDate)
+                    input(type='hidden', name='maNr', value=maNr)
+                .pure-controls
+                    button.pure-button-primary suchen
+        h4
+            | #{Meldung}
