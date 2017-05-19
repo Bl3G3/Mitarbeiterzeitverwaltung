@@ -2,18 +2,17 @@ extends ../layout
 
 block content
     .content
-        h1 test
 
-        if (selected_user >= 0)
-            include ../headings/employeeSelection
-
-        form.pure-form(action="/stamps", method="POST")
+        form.pure-form(method="GET")
             fieldset
-                label(for="fromdate") Von:
-                input#fromdate.inputField(name="fromdate" value=(fromdate ? fromdate : ""))
+                if (selected_employee)
+                    input#maNr.inputField.hidden(name="maNr" value=selected_employee)
 
-                label(for="tilldate") Bis:
-                input#tilldate.inputField(name="tilldate" value=(tilldate ? tilldate : ""))
+                label(for="fromDate") Von:
+                input#fromDate.inputField(name="fromDate" value=(fromDate ? fromDate : ""))
+
+                label(for="tillDate") Bis:
+                input#tillDate.inputField(name="tillDate" value=(tillDate ? tillDate : ""))
 
                 button(type='submit').pure-button.search-button Suchen
 
@@ -31,17 +30,27 @@ block content
                 if (stamplist)
 
                     -var n = 0;
-
                     while n < stamplist.length
                         tr
                             if (stamplist[n])
-                                td #{stamplist[n].timestamp.getDay() + "." + stamplist[n].timestamp.getMonth() + "." + stamplist[n].timestamp.getFullYear()}
+                                //crappy code for crappy apis..
+                                -var month = stamplist[n].timestamp.getMonth() + 1
+                                td(contenteditable=true) #{stamplist[n].timestamp.getDate() + "." + month + "." + stamplist[n].timestamp.getFullYear()}
+
                                 td #{stamplist[n].timestamp.getHours() + ":" + stamplist[n].timestamp.getMinutes()}
-                                    if (user.right)
-                                        a.pure-button
+                                    if (selected_employee)
+                                        a.pure-button.table-button(href="/stamps/admin/change?stamp_no=" + stamplist[n].stamp_no +
+                                        "&maNr=" + selected_employee +
+                                        "&fromDate=" + fromDate +
+                                        "&tillDate=" + tillDate) Edit
+
                                 td.hidden=n++
                             if (stamplist[n])
                                 td #{stamplist[n].timestamp.getHours() + ":" + stamplist[n].timestamp.getMinutes()}
-                                    a.pure-button
+                                    if (selected_employee)
+                                        a.pure-button.table-button(href="/stamps/admin/change?stamp_no=" + stamplist[n].stamp_no +
+                                        "&maNr=" + selected_employee +
+                                        "&fromDate=" + fromDate +
+                                        "&tillDate=" + tillDate) Edit
                                 td.hidden=n++
 

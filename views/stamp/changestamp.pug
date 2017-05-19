@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+    .content
+
+        form.pure-form(method = "POST")
+            fieldset
+
+                //hidden fields to find way back..
+                input#maNr.inputField.hidden(name="maNr" value=selected_employee)
+                input#fromDate.inputField.hidden(name="fromDate" value=(fromDate ? fromDate : ""))
+                input#tillDate.inputField.hidden(name="tillDate" value=(tillDate ? tillDate : ""))
+                input#stamp_no.inputField.hidden(name="stamp_no" value=stamp.stamp_no)
+
+                label(for="stampTime") Stempelzeit:
+                input#stampTime.inputField(name="stampTime" value=stamp.timestamp.getHours() + ":" + stamp.timestamp.getMinutes())
+                br
+                br
+                button(type='submit').pure-button.search-button Speichern
+                a(href = "/stamps/admin?" +
+                    "maNr=" + selected_employee +
+                    "&fromDate=" + fromDate +
+                    "&tillDate=" + tillDate).pure-button.search-button Abbrechen
+

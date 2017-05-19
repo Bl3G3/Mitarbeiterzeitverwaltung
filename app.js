@@ -1,4 +1,3 @@
-require('./models/mitarbeiter');
 var express = require('express');
 var mongoose = require('mongoose');
 var path = require('path');
@@ -14,21 +13,21 @@ var db_config = require('./dbconfig');
 var db = require('./models/db');
 db.connect(db_config.url);
 
-const MongoStore = require('connect-mongo')(session);
+// const MongoStore = require('connect-mongo')(session);
 
-var auth_serialize = require('./modules/auth/serialize_user');
-var auth_strategy = require('./modules/auth/strategy');
+// var auth_serialize = require('./modules/auth/serialize_user');
+// var auth_strategy = require('./modules/auth/strategy');
 
 // passport setup
-passport.serializeUser(auth_serialize.serialize);
-passport.deserializeUser(auth_serialize.deserialize);
-passport.use(auth_strategy.strategy);
+// passport.serializeUser(auth_serialize.serialize);
+// passport.deserializeUser(auth_serialize.deserialize);
+// passport.use(auth_strategy.strategy);
 
 // module middleware
-var auth_middleware = require('./modules/auth/middleware');
+// var auth_middleware = require('./modules/auth/middleware');
 
 // module routers
-var auth_router = require('./modules/auth/router');
+// var auth_router = require('./modules/auth/router');
 var stamps_router = require('./modules/stamp/router');
 var index = require('./routes/index');
 var ap2 = require('./routes/ap2');
@@ -48,21 +47,21 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-var session_ttl = 30; // 30 min
-app.use(session({
-    secret: 'o8u98zqoijfd8254afasdfas98377749lsnczuk934',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {maxAge: session_ttl * 60 * 1000, secure: false},
-    store: new MongoStore({
-        mongooseConnection: db.getMongoose().connection,
-        ttl: session_ttl * 60 // = min
-        //ttl: 10 // = 10 sek
-    })
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());http://stackoverflow.com/questions/8623205/node-js-error-error-cannot-find-module-mongoose
+// var session_ttl = 30; // 30 min
+// app.use(session({
+//     secret: 'o8u98zqoijfd8254afasdfas98377749lsnczuk934',
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {maxAge: session_ttl * 60 * 1000, secure: false},
+//     store: new MongoStore({
+//         mongooseConnection: db.getMongoose().connection,
+//         ttl: session_ttl * 60 // = min
+//         //ttl: 10 // = 10 sek
+//     })
+// }));
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.use(flash());http://stackoverflow.com/questions/8623205/node-js-error-error-cannot-find-module-mongoose
 
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -75,9 +74,8 @@ app.get('/', function (req, res) {
 //module router
 //app.use('/auth', auth_router);
 //app.post('/login',passport.authenticate('local',{successRedirect: '/',failureRedirect: '/login'})); //not finished and therefore not deployed yet
-app.use('/home', auth_middleware.onlyEmployees, index);
-app.use('/stamps',auth_middleware.onlyEmployees, stamps_router);
-//app.use('/ap2', auth_middleware.onlyHR, ap2);
+app.use('/home', index);
+app.use('/stamps', stamps_router);
 app.use('/ap2',ap2);
 // insert new module routers here!
 app.use('/neumitarbeiter', neumitarbeiter);
@@ -88,7 +86,7 @@ app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
-    mongoose.mode
+    // mongoose.mode
 });
 // error handler
 app.use(function (err, req, res, next) {

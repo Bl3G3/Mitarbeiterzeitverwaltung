@@ -1,13 +1,13 @@
-extends ../home/master
-block css
+//
+   Created by sapientia on 16.05.17.
 
 block body
     .body
         .login
             form(method='POST', action='').pure-form.pure-form-aligned
                 .pure-control-group
-                    label(for='username')='Employee No'
-                    input#username(type='number', placeholder='Employee No', name='username')
+                    label(for='username')='Benutzername'
+                    input#username(type='text', placeholder='', name='username')
                 .pure-control-group
                     label(for='password') Password
                     input#password(type='password', placeholder='Password', name='password')

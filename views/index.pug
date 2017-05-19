@@ -1,5 +1,7 @@
 extends layout
 
+
+
 block content
   .content
     //include employeeSelection
@@ -9,7 +11,11 @@ block content
         h2 Eingestempelt
       else
         h2 Ausgestempelt
-      h2=last_stamp.timestamp.getUTCDay() + "." + last_stamp.timestamp.getUTCMonth() + "." + last_stamp.timestamp.getUTCFullYear()
+
+      //  fix crappy date format..
+      -var month = last_stamp.timestamp.getMonth() + 1
+      //dafuq?
+      h2=last_stamp.timestamp.getDate() + "." + month  + "." + last_stamp.timestamp.getFullYear()
       h2=last_stamp.timestamp.getHours() + ":"+last_stamp.timestamp.getMinutes()
 
 

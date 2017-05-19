@@ -7,6 +7,12 @@ exports.connect = function(dburl) {
     mongoose.connect(dburl);
 
     db.on('error', console.error.bind(console, 'connection error:'));
+
+    mongoose.connection.on('open', function (ref) {
+        console.log(ref);
+        console.log('Connected to mongo server.');
+    });
+
 };
 
 exports.disconnect = function(callback) {
