@@ -19,6 +19,8 @@ var Mitarbeiterschema = Schema({
     benutzername: String,
     passwort: String
 });
+
+
 Mitarbeiterschema.methods.set_password = function(password, callback) {
     //use bcrypt to encrypt password
     this.password = bcrypt.hashSync(password);
@@ -83,8 +85,8 @@ exports.createNext  = function(vorname, nachname, aktiv, strasse, ort, telefon, 
 
 //read last id, to create new employees
 exports.readLastID = function (callback) {
-    Mitarbeiter.find({}, {limit:1, sort: {mitarbeiternummer: -1}}, function (err, doc) {
-        callback(err, doc[0].mitarbeiternummer);
+    Mitarbeiter.find(function (err, doc) {
+        callback(err, doc[doc.length -1].mitarbeiternummer);
     });
 };
 
@@ -120,7 +122,7 @@ exports.set_password = function(id, password, callback) {
     exports.read(id, function(err, doc) {
         if (err) callback(err);
         else {
-            doc.set_password = password;
+            doc.set_password(password);
             doc.save(function(err) {
                 if (err) callback(err);
                 else
@@ -136,28 +138,57 @@ exports.read = function(id, callback) {
     });
 };
 
-exports.existsduplicate = function (vorname,nachname, callback)
-{
-    //irgendwie nach namen suchen
-    Mitarbeiter.findOne({vorname: vorname, nachname: nachname},function (err,doc) {
+// exports.existsduplicate = function (vorname,nachname, callback)
+// {
+//     //irgendwie nach namen suchen
+//     //TODO testen.. vermutlich bullshit
+//     Mitarbeiter.findOne({vorname: vorname, nachname: nachname},function (err,doc) {
+//
+//         if(doc)
+//         {
+//             console.log("No duplicate.");
+//             //console.log(users[0]);
+//             callback(false);
+//
+//         }
+//         else
+//         {
+//             console.log("duplicate exists.");
+//             callback(true);
+//         }
+//
+//     });
+//
+// };
+exports.readList = function (vorname, nachname, callback) {
 
-        if(doc)
-        {
-            console.log("No duplicate.");
-            //console.log(users[0]);
-            callback(false);
+    if (vorname && nachname){
+        Mitarbeiter.find(
+            {"vorname": vorname,
+             "nachname": nachname
+            },
+            function (err, list) {
+                callback(err, list);
+            });
+    } else if (vorname){
+        Mitarbeiter.find(
+            {"vorname": vorname
+            },
+            function (err, list) {
+                callback(err, list);
+            });
+    } else if (nachname){
+        Mitarbeiter.find(
+            {"nachname": nachname
+            },
+            function (err, list) {
+                callback(err, list);
+            });
+    } else {
+        callback("no values given");
 
-        }
-        else
-        {
-            console.log("duplicate exists.");
-            callback(true);
-        }
-
-    });
-
+    }
 };
-
 
 
 // exports.model = mongoose.model('Mitarbeiter', Mitarbeiterschema, 'Mitarbeiter');
