@@ -88,7 +88,7 @@ module.exports.saveById = function (_id, _von, _bis, _kat, callback) {
 
             Fehlzeit.check(fe, function (error, meldung) {
                 if (error) {
-                    callback(error, meldung);
+                    callback(error,fe, meldung);
                 } else {
                     fe.save(function (error2) {
                         if (error2) {

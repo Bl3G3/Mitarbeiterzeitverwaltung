@@ -27,27 +27,66 @@ module.exports = ap2model;
 
 module.exports.test = function (consoleout) {
     console.log(consoleout);
-    Mitarbeiter.Mitarbeiter.find({}).exec(function (err, maList) {
+    Mitarbeiter.find({}).exec(function (err, maList) {
         console.log(maList);
     });
 };
 
 module.exports.getMitarbeiterbyFullName = function (firstName, lastName, callback) {
-    Mitarbeiter.Mitarbeiter.find({
-        nachname: lastName,
-        vorname: firstName
-    }).exec(function (err, maList) {
-        if (err) {
-            callback(err, maList, Fehler_getMitarbeiterByFullName_unexpected);
-        } else {
-            if (maList.length === 0) {
-                callback(true, maList, Fehler_getMitarbeiterByFullName_NoMa);
+    if(lastName ===""&&!(firstName ===""))
+    {
+        console.log("suche nach vorname");
+        Mitarbeiter.find({
+            vorname: firstName
+        }).exec(function (err, maList) {
+            if (err) {
+                callback(err, maList, Fehler_getMitarbeiterByFullName_unexpected);
+            } else {
+                if (maList.length === 0) {
+                    callback(true, maList, Fehler_getMitarbeiterByFullName_NoMa);
+                }
+                else {
+                    callback(err, maList, "");
+                }
             }
-            else {
-                callback(err, maList, "");
-            }
+        });
+    }else{
+        if(!(lastName==="" )&&firstName ==="" )
+        {
+            console.log("suche nach nachname");
+            Mitarbeiter.find({
+                nachname: lastName
+            }).exec(function (err, maList) {
+                if (err) {
+                    callback(err, maList, Fehler_getMitarbeiterByFullName_unexpected);
+                } else {
+                    if (maList.length === 0) {
+                        callback(true, maList, Fehler_getMitarbeiterByFullName_NoMa);
+                    }
+                    else {
+                        callback(err, maList, "");
+                    }
+                }
+            });
+        }else{
+            console.log("suche nach vor/nachnamen");
+            Mitarbeiter.find({
+                nachname: lastName,
+                vorname: firstName
+            }).exec(function (err, maList) {
+                if (err) {
+                    callback(err, maList, Fehler_getMitarbeiterByFullName_unexpected);
+                } else {
+                    if (maList.length === 0) {
+                        callback(true, maList, Fehler_getMitarbeiterByFullName_NoMa);
+                    }
+                    else {
+                        callback(err, maList, "");
+                    }
+                }
+            });
         }
-    });
+    }
 };
 
 

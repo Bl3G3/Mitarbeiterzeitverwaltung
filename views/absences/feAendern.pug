@@ -1,38 +1,42 @@
 extends ../layout
 block content
-    h1 Fehlzeit ändern
-    h2 #{Meldung}
-    form.pure-form(action='http://127.0.0.1:3000/ap2/feAendernA', method='get')
-        h2 Alte Fehlzeit
-        label(for='old_vondate')
-            | Von:
-        input(type='date', name='old_vondate', readonly='readonly', value=old_vondate)
-        label(for='old_bisdate')
-            | Bis:
-        input(type='date', name='old_bisdate', readonly='readonly', value=old_bisdate)
-        label(for='old_kat')
-            | Kategorie:
-        input(type='text', name='old_kat', readonly='readonly', value=old_kat)
-        h2 Neue Fehlzeit
-        label(for='new_vondate')
-            | Von:
-        input(type='date', name='new_vondate', value=old_vondate)
-        label(for='new_bisdate')
-            | Bis:
-        input(type='date', name='new_bisdate', value=old_bisdate)
-        br
-        input(type='radio', name='new_kat', value='krank')
-        | Krank
-        br
-        input(type='radio', name='new_kat', value='urlaub')
-        | Urlaub
-        br
-        input(type='radio', name='new_kat', value='homeOffice')
-        | Home Office
-        br
-        input(type='radio', name='new_kat', value='abwesend')
-        | Abwesend
-        br
-        input(type='hidden', name='maNr' value=old_maNr)
-        input(type='hidden', name='feId' value=old_feId)
-        input(type='submit', value='aendern')
+    .content
+        h1 Fehlzeit ändern
+        h2 #{Meldung}
+        form.pure-form-aligned(action='http://127.0.0.1:3000/ap2/feAendernA', method='get')
+            fieldset
+                .pure-control-group
+                    h2 Alte Fehlzeit
+                .pure-control-group
+                    label(for='old_vondate') Von
+                    input(type='date', name='old_vondate', readonly='readonly', value=old_vondate)
+                .pure-control-group
+                    label(for='old_bisdate') Bis
+                    input(type='date', name='old_bisdate', readonly='readonly', value=old_bisdate)
+                .pure-control-group
+                    label(for='old_kat') Kategorie
+                    input(type='text', name='old_kat', readonly='readonly', value=old_kat)
+                .pure-control-group
+                    h2 Neue Fehlzeit
+                .pure-control-group
+                    label(for='new_vondate') Von
+                    input(type='date', name='new_vondate', value=old_vondate)
+                .pure-control-group
+                    label(for='new_bisdate') Bis
+                    input(type='date', name='new_bisdate', value=old_bisdate)
+                .pure-control-group
+                    label.pure-radio(for='option-one') Krank
+                    input#option-one(type='radio', name='new_kat', value='krank')
+                .pure-control-group
+                    label.pure-radio(for='option-two') Urlaub
+                    input#option-two(type='radio', name='new_kat', value='urlaub')
+                .pure-control-group
+                    label.pure-radio(for='option-three') Home Office
+                    input#option-three(type='radio', name='new_kat', value='homeOffice')
+                .pure-control-group
+                    label.pure-radio(for='option-four') Abwesend
+                    input#option-four(type='radio', name='new_kat', value='abwesend')
+                .pure-controls
+                    input(type='hidden', name='maNr' value=old_maNr)
+                    input(type='hidden', name='feId' value=old_feId)
+                    button.pure-button-primary aendern

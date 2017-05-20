@@ -5,10 +5,12 @@ html
 
 
     link(rel='stylesheet', href='/stylesheets/menu.css')
+
     //link(rel='stylesheet', href='/stylesheets/employeeSelection.css')
     link(rel='stylesheet', href='/stylesheets/pure-min.css')
     //script(src='https://code.jquery.com/jquery-3.2.1.min.js')
     //Macht das Sinn?
+    //script(src='/models/employees.js')
     //script(src='/models/stamps.js')
 
   body
@@ -30,7 +32,7 @@ html
               li.pure-menu-item
                 a.pure-menu-link(href='/stamps/admin') Zeitstempel
               li.pure-menu-item
-                a.pure-menu-link(href='/ap2/maSuchen') Fehlzeiten
+                a.pure-menu-link(href='/ap2/maSuchen?tableHeader=FE&linkName=edit&link=http://127.0.0.1:3000/ap2/fe&siteHeader=Fehlzeiten') Fehlzeiten
               li.pure-menu-item
                 a.pure-menu-link(href='#') Kernzeiten
 

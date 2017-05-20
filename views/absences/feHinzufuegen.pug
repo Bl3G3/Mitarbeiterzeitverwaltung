@@ -1,28 +1,28 @@
 extends ../layout
 block content
-    h1 Fehlzeit hinzufuegen
-    form.pure-form(action='http://127.0.0.1:3000/ap2/feHinzufuegenA', method='get')
-        | Von:
-        br
-        input(type='date', name='vondate', value=setVonDate)
-        br
-        |  Bis:
-        br
-        input(type='date', name='bisdate', value=setBisDate)
-        br
-        input(type='hidden', name='maNr', value=maNummer)
-        br
-        input(type='radio', name='kat', value='krank', checked=setKat == "krank")
-        |  Krank
-        br
-        input(type='radio', name='kat', value='urlaub', checked=setKat == "urlaub")
-        |  Urlaub
-        br
-        input(type='radio', name='kat', value='homeOffice', checked=setKat == "homeOffice")
-        |  Home Office
-        br
-        input(type='radio', name='kat', value='abwesend', checked=setKat == "abwesend")
-        |  Abwesend
-        br
-        input(type='submit', value='speichern')
-    h1 #{Meldung}
+    .content
+        h1 Fehlzeit hinzufuegen
+        form.pure-form-aligned(action='http://127.0.0.1:3000/ap2/feHinzufuegenA', method='get')
+            fieldset
+                .pure-control-group
+                    label(for='vondate') Von
+                    input(type='date', name='vondate', value=setVonDate)
+                .pure-control-group
+                    label(for='bisdate') Bis
+                    input(type='date', name='bisdate', value=setBisDate)
+                    input(type='hidden', name='maNr', value=maNummer)
+                .pure-control-group
+                    label.pure-radio(for='option-one') Krank
+                    input#option-one(type='radio', name='kat', value='krank')
+                .pure-control-group
+                    label.pure-radio(for='option-two') Urlaub
+                    input#option-two(type='radio', name='kat', value='urlaub')
+                .pure-control-group
+                    label.pure-radio(for='option-three') Home Office
+                    input#option-three(type='radio', name='kat', value='homeOffice')
+                .pure-control-group
+                    label.pure-radio(for='option-four') Abwesend
+                    input#option-four(type='radio', name='kat', value='abwesend')
+                .pure-controls
+                    button.pure-button-primary speichern
+        h1 #{Meldung}
